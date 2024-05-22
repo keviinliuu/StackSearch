@@ -6,23 +6,16 @@ import { BigQuery } from '@google-cloud/bigquery'
 dotenv.config();
 
 const app = express();
+const testRouter = express.Router()
+const port = process.env.PORT;
 
 app.use(express.urlencoded({ extended: true}));
 app.use(cors());
 app.use(express.json());
+app.use('/api/names', testRouter)
 
-/**
- * TODO(developer):
- *  1. Uncomment and replace these variables before running the sample.
- *  2. Set up ADC as described in https://cloud.google.com/docs/authentication/external/set-up-adc
- *  3. Make sure you have the necessary permission to list storage buckets "storage.buckets.list"
- *    (https://cloud.google.com/storage/docs/access-control/iam-permissions#bucket_permissions)
- */
-const projectId = 'cs348-424121';
+testRouter.get('/', async (req, res) => {
 
-
-const bigquery = new BigQuery({projectId});
-  // [END bigquery_client_json_credentials]
   async function query() {
     // Queries the U.S. given names dataset for the state of Texas.
 
@@ -44,8 +37,29 @@ const bigquery = new BigQuery({projectId});
     // Wait for the query to finish
     const [rows] = await job.getQueryResults();
 
-    // Print the results
-    console.log('Rows:');
-    rows.forEach(row => console.log(row));
+    return rows
   }
-  query();
+
+  const results = await query();
+
+
+
+  return res.status(200).send({result: results})
+})
+
+app.listen(3000);
+
+
+/**
+ * TODO(developer):
+ *  1. Uncomment and replace these variables before running the sample.
+ *  2. Set up ADC as described in https://cloud.google.com/docs/authentication/external/set-up-adc
+ *  3. Make sure you have the necessary permission to list storage buckets "storage.buckets.list"
+ *    (https://cloud.google.com/storage/docs/access-control/iam-permissions#bucket_permissions)
+ */
+const projectId = 'cs348-424121';
+
+
+const bigquery = new BigQuery({projectId});
+  // [END bigquery_client_json_credentials]
+  

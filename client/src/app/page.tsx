@@ -1,25 +1,31 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [username, setUsername] = useState('');
+  const [names, setNames] = useState([])
+
+  useEffect(()=> {
+    handleSubmit();
+
+  }, [])
 
   const handleSubmit = async () => {
+    console.log("HELLO")
     try {
-      const response = await fetch('http://localhost:port/api/submit', {
-        method: 'POST',
+      fetch('http://localhost:3000/api/names', {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username }),
-      });
+      })
+      .then((results)=>results.json())
+      .then((resp)=> {
+        console.log(resp.result);
+        setNames(resp.result.map(x => x.display_name))
+      })
 
-      if (response.ok) {
-        console.log('Data submitted successfully!');
-      } else {
-        console.error('Failed to submit data:', response.statusText);
-      }
     } catch (error) {
       console.error('Error:', error);
     }
@@ -43,6 +49,7 @@ export default function Home() {
             Submit
           </button>
         </form>
+        <p>{names}</p>
       </div>
     </main>
   );
