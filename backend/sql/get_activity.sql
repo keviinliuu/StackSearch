@@ -23,3 +23,6 @@ FROM (
     FROM AnswerVotes
 )
 WHERE voterID = @userID;
+
+SELECT *
+FROM stackoverflow_sample.Users;
