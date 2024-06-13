@@ -1,18 +1,18 @@
 SELECT * 
 FROM Questions
-WHERE authorID = @userID
+WHERE authorID = @userID;
 
 SELECT *
 FROM Answers
-WHERE authorID = @userID
+WHERE authorID = @userID;
 
 SELECT *
 FROM Wikis
-WHERE authorID = @userID
+WHERE authorID = @userID;
 
 SELECT *
 FROM Comments
-WHERE authorID = @userID
+WHERE authorID = @userID;
 
 SELECT *
 FROM (
@@ -22,5 +22,4 @@ FROM (
     SELECT voterID, answerID as postID, isUpvote
     FROM AnswerVotes
 )
-WHERE voterID = @userID
-
+WHERE voterID = @userID;
