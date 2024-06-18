@@ -32,7 +32,9 @@ You can choose whatever port you want. `PROJECT_ID` should be replaced with your
 
 To setup the frontend:
 
-// TODO 
+4) CD into the client folder with `cd backend`
+5) Run `npm i`
+6) Run `npm run dev`
 
 
 ## Features Currently Supported
