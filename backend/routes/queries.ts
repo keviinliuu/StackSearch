@@ -91,7 +91,7 @@ router.route('/api/getexperts/:tag').get(async (req, res) => {
 
 
 router.route('/api/getmostcomments/:amount').get(async (req, res) => {
-    const amount = req.params.amount
+    const amount = req.params.amount;
 
     if(!amount) {
         return res.status(400).send({ error: 'Amount is required' })
@@ -110,6 +110,32 @@ router.route('/api/getmostcomments/:amount').get(async (req, res) => {
 
     try {
         return res.status(200).send({ posts: rows })
+    } catch (error) {
+        console.error('Error executing query', error);
+        return res.status(500).send({ error: 'Internal server error' });
+    }
+})
+
+router.route('/api/getavgrestime/:tag').get(async (req, res) => {
+    const tag = req.params.tag;
+
+    if(!tag) {
+        return res.status(400).send({ error: 'Tag is required' });
+    }
+
+    const sqlFilePath = '../sql/get_average_response_time.sql'
+    const query = readSQLFile(sqlFilePath);
+
+    const options = {
+        query,
+        params: { tag: tag }
+    };
+
+    const [job] = await bigquery.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
+
+    try {
+        return res.status(200).send({ time: rows })
     } catch (error) {
         console.error('Error executing query', error);
         return res.status(500).send({ error: 'Internal server error' });

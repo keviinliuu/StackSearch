@@ -9,7 +9,7 @@ WITH first_answers AS (
   EXISTS (
     SELECT * 
     FROM
-    Tags t
+    stackoverflow_sample.Tags t
     JOIN stackoverflow_sample.QuestionTags qt ON qt.tagID = t.tagID
     WHERE
     q.postID = qt.postID
