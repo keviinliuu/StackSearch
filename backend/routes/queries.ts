@@ -135,7 +135,7 @@ router.route('/api/getavgrestime/:tag').get(async (req, res) => {
     const [rows] = await job.getQueryResults();
 
     try {
-        return res.status(200).send({ posts: rows })
+        return res.status(200).send({ time: rows })
     } catch (error) {
         console.error('Error executing query', error);
         return res.status(500).send({ error: 'Internal server error' });
