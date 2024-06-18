@@ -1,28 +1,30 @@
 SELECT * 
-FROM Questions
+FROM stackoverflow_sample.Questions
 WHERE authorID = @userID;
 
 SELECT *
-FROM Answers
+FROM stackoverflow_sample.Answers
 WHERE authorID = @userID;
 
 SELECT *
-FROM Wikis
+FROM stackoverflow_sample.Wikis
 WHERE authorID = @userID;
 
 SELECT *
-FROM Comments
+FROM stackoverflow_sample.Comments
 WHERE authorID = @userID;
 
-SELECT *
+SELECT postID
 FROM (
     SELECT voterID, questionID as postID, isUpvote
-    FROM QuestionVotes
-    UNION
+    FROM stackoverflow_sample.QuestionVotes
+    UNION ALL
     SELECT voterID, answerID as postID, isUpvote
-    FROM AnswerVotes
+    FROM stackoverflow_sample.AnswerVotes
 )
 WHERE voterID = @userID;
 
-SELECT *
-FROM stackoverflow_sample.Users;
+SELECT username
+FROM stackoverflow_sample.Users t
+WHERE t.userID = @userID
+LIMIT 100;

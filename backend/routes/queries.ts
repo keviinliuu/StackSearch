@@ -15,102 +15,48 @@ const readSQLFile = (filePath: string) => {
 };
 
 router.route('/api/getactivity').get(async (req, res) => {
-    const { userId } = req.body;
+    const { username } = req.body;
     
-    if(!userId) {
-        return res.status(400).send({ error: 'User ID is required' });
+    if(!username) {
+        return res.status(400).send({ error: 'Username is required' });
     }
 
-    async function query() {
-        // Queries the U.S. given names dataset for the state of Texas.
-    
-        const query = `SELECT display_name
-          FROM \`stackoverflow.users\`
-          LIMIT 100`;
-        // For all options, see https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/query
-        // const options = {
-        //   query: query,
-        //   // Location must match that of the dataset(s) referenced in the query.
-        //   location: 'CA',
-        // };
-        // Run the query as a job
-        const [job] = await bigquery.createQueryJob({query});
-        console.log(`Job ${job.id} started.`);
-        // Wait for the query to finish
+    async function getId(username: string) {
+        const sqlFilePath = '../sql/get_userID.sql';
+        const query = readSQLFile(sqlFilePath);
+
+        const options = {
+            query,
+            params: { username: username }
+        }
+
+        const [job] = await bigquery.createQueryJob(options);
         const [rows] = await job.getQueryResults();
-    
-        // Print the results
-        console.log('Rows:');
-        rows.forEach(row => console.log(row));
-        return rows
-      }
+
+        return rows[0].userID;
+    } 
+
+    const userId = await getId(username);
 
     const sqlFilePath = '../sql/get_activity.sql';
     const queries = readSQLFile(sqlFilePath).split(';').map(query => query.trim()).filter(query => query);
+    let results: any[] = [];
+        
+    for(let i = 0; i <= 4; i++) {
+        const query = queries[i];
 
-    const questions = queries[0];
-    const answers = queries[1];
-    const wikis = queries[2];
-    const comments = queries[3];
-    const votes = queries[4];
-    // const testQ = queries[5];
-    const testQ = `SELECT display_name
-      FROM \`stackoverflow_full.users\`
-      LIMIT 100`;
-      
+        const options = {
+            query,
+            params: { userID: userId }
+        }
 
-
-    const testQuery = {
-        testQ,
-        params: { UserId: userId }
-    }
-
-    const questionQuery = {
-        questions,
-        params: { UserId: userId }
-    }
-
-    const answerQuery = {
-        answers,
-        params: { UserId: userId }
-    }
-
-    const wikiQuery = {
-        wikis,
-        params: { UserId: userId }
-    }
-
-    const commentQuery = {
-        comments,
-        params: { UserId: userId }
-    }
-
-    const voteQuery = {
-        votes,
-        params: { UserId: userId }
+        const [job] = await bigquery.createQueryJob(options);
+        const [rows] = await job.getQueryResults();
+        results.push(rows);
     }
 
     try {
-        // const [questionJob] = await bigquery.createQueryJob(questionQuery);
-        // const [questionRows] = await questionJob.getQueryResults();
-
-        // const [answerJob] = await bigquery.createQueryJob(answerQuery);
-        // const [answerRows] = await answerJob.getQueryResults();
-
-        // const [wikiJob] = await bigquery.createQueryJob(wikiQuery);
-        // const [wikiRows] = await wikiJob.getQueryResults();
-
-        // const [commentJob] = await bigquery.createQueryJob(commentQuery);
-        // const [commentRows] = await commentJob.getQueryResults();
-
-        // const [voteJob] = await bigquery.createQueryJob(voteQuery);
-        // const [voteRows] = await voteJob.getQueryResults();
-
-        // const [job] = await bigquery.createQueryJob({testQ});
-        // const [rows] = await job.getQueryResults();
-        const results = await query();
-        return res.status(200).send({test: results})
-        //return res.status(200).send({ questions: questionRows, answers: answerRows, wikis: wikiRows, comments: commentRows, votes: voteRows });
+        return res.status(200).send({ questions: results[0], answers: results[1], wikis: results[2], comments: results[3], upvotes: results[4] })
     } catch (error) {
         console.error('Error executing queries', error);
         return res.status(500).send({ error: 'Internal server error' });
@@ -118,7 +64,7 @@ router.route('/api/getactivity').get(async (req, res) => {
 })
 
 router.route('/api/getexperts').get(async (req, res) => {
-    const { tag } = req.body;
+    const { tag, amount } = req.body;
 
     if(!tag) {
         return res.status(400).send({ error: 'Tag is required' });
@@ -129,14 +75,14 @@ router.route('/api/getexperts').get(async (req, res) => {
 
     const options = {
         query,
-        params: { tag: tag }
+        params: { tag: tag, amount: amount }
     };
 
-    try {
-        const [job] = await bigquery.createQueryJob(options);
-        const [rows] = await job.getQueryResults();
+    const [job] = await bigquery.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
 
-        return rows;
+    try {
+        return res.status(200).send({ experts: rows })
     } catch (error) {
         console.error('Error executing query', error);
         return res.status(500).send({ error: 'Internal server error' });
