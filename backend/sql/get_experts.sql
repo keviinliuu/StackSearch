@@ -1,7 +1,8 @@
 SELECT
 COUNT(*) numAns,
-a.authorID
-FROM stackoverflow_sample.Answers a
+a.authorID,
+u.username
+FROM stackoverflow_sample.Answers a, stackoverflow_sample.Users u
 JOIN stackoverflow_sample.Questions q ON a.questionID = q.postID
 WHERE
 EXISTS (
@@ -15,6 +16,7 @@ EXISTS (
   ) 
 AND a.authorID IS NOT NULL
 GROUP BY
-a.authorID
+a.authorID,
+u.username
 ORDER BY numAns DESC
 LIMIT @amount;
