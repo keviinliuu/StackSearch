@@ -23,8 +23,3 @@ FROM (
     FROM stackoverflow_sample.AnswerVotes
 )
 WHERE voterID = @userID;
-
-SELECT username
-FROM stackoverflow_sample.Users t
-WHERE t.userID = @userID
-LIMIT 100;

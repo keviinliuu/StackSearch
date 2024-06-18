@@ -14,8 +14,8 @@ const readSQLFile = (filePath: string) => {
     return fs.readFileSync(path.resolve(__dirname, filePath), 'utf8');
 };
 
-router.route('/api/getactivity').get(async (req, res) => {
-    const { username } = req.body;
+router.route('/api/getactivity/:username').get(async (req, res) => {
+    const username = req.params.username;
     
     if(!username) {
         return res.status(400).send({ error: 'Username is required' });
@@ -63,8 +63,8 @@ router.route('/api/getactivity').get(async (req, res) => {
     }
 })
 
-router.route('/api/getexperts').get(async (req, res) => {
-    const { tag, amount } = req.body;
+router.route('/api/getexperts/:tag').get(async (req, res) => {
+    const tag = req.params.tag
 
     if(!tag) {
         return res.status(400).send({ error: 'Tag is required' });
@@ -75,7 +75,7 @@ router.route('/api/getexperts').get(async (req, res) => {
 
     const options = {
         query,
-        params: { tag: tag, amount: amount }
+        params: { tag: tag, amount: 10 }
     };
 
     const [job] = await bigquery.createQueryJob(options);
@@ -83,6 +83,33 @@ router.route('/api/getexperts').get(async (req, res) => {
 
     try {
         return res.status(200).send({ experts: rows })
+    } catch (error) {
+        console.error('Error executing query', error);
+        return res.status(500).send({ error: 'Internal server error' });
+    }
+})
+
+
+router.route('/api/getmostcomments/:amount').get(async (req, res) => {
+    const amount = req.params.amount
+
+    if(!amount) {
+        return res.status(400).send({ error: 'Amount is required' })
+    }
+
+    const sqlFilePath = '../sql/get_posts_with_most_comments.sql'
+    const query = readSQLFile(sqlFilePath);
+
+    const options = {
+        query,
+        params: { amount: parseInt(amount) }
+    };
+
+    const [job] = await bigquery.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
+
+    try {
+        return res.status(200).send({ posts: rows })
     } catch (error) {
         console.error('Error executing query', error);
         return res.status(500).send({ error: 'Internal server error' });
