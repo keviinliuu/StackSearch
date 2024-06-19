@@ -142,4 +142,33 @@ router.route('/api/getavgrestime/:tag').get(async (req, res) => {
     }
 })
 
+router.route('/api/getqadiff/:order/:amount').get(async (req, res) => {
+    const order = req.params.order;
+    const amount = req.params.amount;
+    
+    const validDesc = ['asc', 'desc']
+
+    if(!order || !validDesc.includes(order.toLocaleLowerCase()) || !amount) {
+        return res.status(400).send({ error: 'valid ordering and amount are required' });
+    }
+
+    const sqlFilePath = '../sql/get_users_with_qa_diff.sql'
+    const query = readSQLFile(sqlFilePath);
+
+    const options = {
+        query,
+        params: { order : order.toLowerCase(), amount: parseInt(amount) }
+    };
+
+    const [job] = await bigquery.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
+
+    try {
+        return res.status(200).send({ users: rows })
+    } catch (error) {
+        console.error('Error executing query', error);
+        return res.status(500).send({ error: 'Internal server error' });
+    }
+})
+
 export default router;

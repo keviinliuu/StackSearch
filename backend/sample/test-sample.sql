@@ -98,3 +98,36 @@ SELECT
 AVG(fa.first_ans_delay) as average_response_time
 FROM
 first_answers fa;
+
+-----------
+
+WITH askedQuestions AS
+(
+  SELECT 
+  q.authorID,
+  COUNT(*) AS qcount,
+  FROM
+  stackoverflow_sample.Questions q
+  GROUP BY 
+  q.authorID
+)
+,
+answers AS 
+(
+  SELECT
+  a.authorID,
+  COUNT(*) AS acount
+  FROM
+  stackoverflow_sample.Answers a
+  GROUP BY 
+  a.authorID
+)
+
+SELECT 
+ q.authorID as userID,
+ (qcount - acount) AS qdelta
+ FROM
+  askedQuestions q JOIN
+  answers a ON q.authorID = a.authorID 
+ ORDER BY qdelta DESC
+ LIMIT 10;

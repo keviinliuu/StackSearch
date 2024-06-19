@@ -177,3 +177,50 @@
         }
     ]
 }
+
+--------------
+
+{
+    "users": [
+        {
+            "userID": 864385,
+            "qdelta": 20
+        },
+        {
+            "userID": 95245,
+            "qdelta": 17
+        },
+        {
+            "userID": 1041299,
+            "qdelta": 15
+        },
+        {
+            "userID": 930640,
+            "qdelta": 13
+        },
+        {
+            "userID": 34088,
+            "qdelta": 12
+        },
+        {
+            "userID": 675383,
+            "qdelta": 11
+        },
+        {
+            "userID": 7079188,
+            "qdelta": 11
+        },
+        {
+            "userID": 546509,
+            "qdelta": 11
+        },
+        {
+            "userID": 764715,
+            "qdelta": 10
+        },
+        {
+            "userID": 2091169,
+            "qdelta": 9
+        }
+    ]
+}
