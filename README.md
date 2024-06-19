@@ -46,3 +46,7 @@ There are currently 3 features that are supported (with more to come!)
 2) Get Experts - Given a tag, retrieve a list of the top "experts" of the tag, i.e. the people who have given the most answers to posts that have that tag.
 
 3) Get Posts with Most Comments from a Single User - Given an amount of posts to retrieve, retrieves the top number of posts with the most comments from the same user.
+
+## Where to locate the SQL files (C2/C3)
+
+The SQL files are located in `backend/sql`.
