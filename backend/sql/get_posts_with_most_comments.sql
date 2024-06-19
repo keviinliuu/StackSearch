@@ -15,4 +15,4 @@ SELECT
 *,
 numComments
 FROM stackoverflow_sample.Answers a JOIN
-mostComments mc ON a.postID = mc.parentID
+mostComments mc ON a.postID = mc.parentID;

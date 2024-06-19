@@ -1,0 +1,179 @@
+{
+    "questions": [
+        {
+            "postID": 23015293,
+            "title": "Resize textarea programmatically without modifying min-size",
+            "body": "<p>As you can see <a href=\"http://codepen.io/anon/pen/wDLqE/\" rel=\"nofollow noreferrer\">here</a>, the textarea won't resize under 100px*100px. Apparently, it's the normal behaviour. </p>\n\n<p>But how can I initialize a textarea to a custom size, and then let the user resize it at the size he wants afterwards (bigger AND smaller) without using jQuery ui?</p>\n\n<p>The only way seems to be using the mouse down/move/up events, right?</p>\n\n<p><a href=\"https://stackoverflow.com/questions/13037177/allow-a-textarea-resize-to-shrink-not-just-grow-element-from-its-original-defa\">Here</a> is a related question (with no related answers).</p>",
+            "authorID": 719276,
+            "score": 0,
+            "creation_date": {
+                "value": "2014-04-11T14:22:55.493Z"
+            },
+            "acceptedID": 23015590
+        },
+        {
+            "postID": 15065537,
+            "title": "OpenGL HSV additive blending",
+            "body": "<p>I'd like to have this kind of effect with OpenGL:\n<a href=\"http://www.escapemotions.com/experiments/flame/#top\" rel=\"nofollow\">http://www.escapemotions.com/experiments/flame/#top</a></p>\n\n<p>There is an additive blending which seem to add brightness values: addition of red color gives white color. </p>\n\n<pre><code>(255,0,0) + (200,0,0) -&gt; (255,100,100)\n</code></pre>\n\n<p>I could implement this using GLSL (converting the two colors into HSV space, adding the values, and ceverting back), but I'm wondering if there is a better way.</p>\n\n<p>The flame painter is made with Processing (which I don't know well since I use openframeworks), how the effect is computed in Processing ?</p>",
+            "authorID": 719276,
+            "score": 1,
+            "creation_date": {
+                "value": "2013-02-25T11:06:37.733Z"
+            },
+            "acceptedID": 22917063
+        },
+        {
+            "postID": 15063490,
+            "title": "SURF not bound in opencv-python?",
+            "body": "<p>I'm getting this error when trying to use  cv.ExtractSURF:</p>\n\n<blockquote>\n  <p>cv2.error: OpenCV was built without SURF support</p>\n</blockquote>\n\n<p>I found the solution for c++ in this topic:</p>\n\n<p><a href=\"https://stackoverflow.com/questions/11175794/opencv-surf-function-is-not-implemented\">OpenCV SURF function is not implemented</a></p>\n\n<p>but how can I use it in python ?</p>\n\n<hr>\n\n<p>---Edit---</p>\n\n<hr>\n\n<p>When I try to run the example find_obj.py which uses cv2.SURF(800) I get the following error: </p>\n\n<pre><code>AttributeError: 'module' object has no attribute 'SURF'\n</code></pre>",
+            "authorID": 719276,
+            "score": 1,
+            "creation_date": {
+                "value": "2013-02-25T09:10:55.327Z"
+            },
+            "acceptedID": 15247245
+        },
+        {
+            "postID": 32540443,
+            "title": "Can poly2tri create new points in the polygon?",
+            "body": "<p>Is that possible that <a href=\"https://code.google.com/p/poly2tri/\" rel=\"nofollow\">poly2tri</a> creates new points for the triangulation, or does it always use the given points only (the points on the contour and holes)?</p>",
+            "authorID": 719276,
+            "score": 1,
+            "creation_date": {
+                "value": "2015-09-12T15:21:41.037Z"
+            },
+            "acceptedID": 32560363
+        }
+    ],
+    "answers": [
+        {
+            "postID": 15085928,
+            "questionID": 15063490,
+            "body": "<p>OK this happens because I use Fedora 18 (and I installed it with yum):\n<a href=\"http://forums.fedoraforum.org/showthread.php?t=287847\" rel=\"nofollow\">http://forums.fedoraforum.org/showthread.php?t=287847</a></p>",
+            "authorID": 719276,
+            "score": 1,
+            "creation_date": {
+                "value": "2013-02-26T09:51:19.850Z"
+            }
+        }
+    ],
+    "wikis": [],
+    "comments": [],
+    "upvotes": []
+}
+
+--------------
+
+{
+    "experts": [
+        {
+            "numAns": 4,
+            "authorID": 3831989,
+            "username": "Alex"
+        },
+        {
+            "numAns": 3,
+            "authorID": 3831989,
+            "username": "Bob"
+        },
+        {
+            "numAns": 2,
+            "authorID": 3831989,
+            "username": "Tony"
+        },
+        {
+            "numAns": 2,
+            "authorID": 3831989,
+            "username": "Abhishek"
+        },
+        {
+            "numAns": 2,
+            "authorID": 3831989,
+            "username": "Jeremy"
+        },
+        {
+            "numAns": 2,
+            "authorID": 3831989,
+            "username": "Dan"
+        },
+        {
+            "numAns": 2,
+            "authorID": 3831989,
+            "username": "Abdullah"
+        },
+        {
+            "numAns": 1,
+            "authorID": 3831989,
+            "username": "Satheesh Kumar"
+        },
+        {
+            "numAns": 1,
+            "authorID": 3831989,
+            "username": "Donnie Ashok"
+        },
+        {
+            "numAns": 1,
+            "authorID": 3831989,
+            "username": "Gajendra24"
+        }
+    ]
+}
+
+--------------
+
+{
+    "posts": [
+        {
+            "postID": 15454247,
+            "questionID": 15441628,
+            "body": "<p>This is only a partial solution but:</p>\n\n<p>If I start play, then enter \"cloudbees-deploy-config mrm\", then it deploys with the mrm.conf</p>",
+            "authorID": 1808672,
+            "score": 0,
+            "creation_date": {
+                "value": "2013-03-16T20:16:15.463Z"
+            },
+            "numComments": 2,
+            "parentID": 15454247,
+            "authorID_1": 1808672,
+            "numComments_1": 2
+        },
+        {
+            "postID": 8028207,
+            "questionID": 6878664,
+            "body": "<p>I do not understand why nobody tried to answer this, or even comment in any way. SO works in mysterious ways I guess.. ;) Anyhow, I have researched enough (I think so) to be able to answer this myself, with a certain degree of confidence.</p>\n\n<p>So in essence prepared queries are much safer than just input escaping such as <code>mysql_real_escape_string();</code> , because as some wise people have said: </p>\n\n<blockquote>\n  <p>Yes, mysql_real_escape_string is effectively just a string escaping function. It is not a magic bullet. All it will do is escape dangerous characters in order that they can be safe to use in a single query string. However, if you do not sanitize your inputs beforehand, then you will be vulnerable to certain attack vectors.</p>\n</blockquote>\n\n<p>Link to full answer: <a href=\"https://stackoverflow.com/questions/110575/do-htmlspecialchars-and-mysql-real-escape-string-keep-my-php-code-safe-from-inje\">mysql_real_escape_string</a></p>\n\n<p>So what I have done to test my prepared statement vs escaping - I have made a simple submit form and tried to sanitize inputs with <code>mysql_real_escape_string();</code> and surely it failed with examples like <code>\"1 OR 1=1\"</code>, some people suggested adding the escaped values inside single quotes like that: </p>\n\n<blockquote>\n  <p>$query = \"SELECT * FROM mydb WHERE ID = ' \".$escapedID.\" ' \";</p>\n</blockquote>\n\n<p>It helps to prevent the <code>\"1 OR 1=1\"</code> example, but surely this is not the best practice. The problem with escaping is that it does not protect from people altering your query logic in malicious ways.</p>\n\n<p>So from now on I will stick to ADODB prepared statements. Like the one in my original question above, or a shorter version from <a href=\"http://bobby-tables.com/php.html\" rel=\"nofollow noreferrer\">bobby-tables</a> website:</p>\n\n<pre><code>   $dbConnection = NewADOConnection($connectionString); \n   $sqlResult =  $dbConnection-&gt;Execute( \n   'SELECT user_id,first_name,last_name FROM users WHERE username=? AND password=?'\n   , array($_POST['username'], sha1($_POST['password']) );\n</code></pre>\n\n<p>Other very helpful questions regarding SQL Injections:</p>\n\n<ul>\n<li><a href=\"https://stackoverflow.com/questions/110575/do-htmlspecialchars-and-mysql-real-escape-string-keep-my-php-code-safe-from-inje\">Code safe from injections</a></li>\n<li><a href=\"https://stackoverflow.com/questions/7893361/i-really-do-not-understand-mysql-injection-what-is-it\">I do not understand SQL Injection</a></li>\n<li><a href=\"http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/\" rel=\"nofollow noreferrer\">SQL Injection cheat sheet</a></li>\n</ul>\n\n<p>Also watch this video, it makes SQL injection a lot easier to grasp:</p>\n\n<ul>\n<li><a href=\"http://www.youtube.com/watch?v=o4dJ7hdA8fs\" rel=\"nofollow noreferrer\">SQL Injection Myths &amp; Fallacies</a></li>\n</ul>",
+            "authorID": 642462,
+            "score": 7,
+            "creation_date": {
+                "value": "2011-11-06T15:50:32.267Z"
+            },
+            "numComments": 3,
+            "parentID": 8028207,
+            "authorID_1": 642462,
+            "numComments_1": 3
+        },
+        {
+            "postID": 26070594,
+            "questionID": 26070393,
+            "body": "<p>After some research it looks like you can't do what I'd like. Here is the alternative that I coded to pop a dialog and open the Settings app automatically if on iOS 8+.</p>\n<p>Some notes:</p>\n<ul>\n<li>Since iOS 10 you need to specify <code>NSCameraUsageDescription</code> key in your Info.plist to be able ask for camera access, otherwise your app will crash at runtime.</li>\n<li>Once the user changes any permissions for your app, it will kill your app. Handle accordingly and save any needed data before the user hits that &quot;Go&quot; button.</li>\n<li>At some point between iOS 8 and 11, Apple no longer required the user to touch the Privacy cell in the Setting apps in order to get to and change the Camera settings. You may want to change your instructions on what the user is supposed to do in the Settings app based on what iOS version they are using. If someone wants to leave a comment below telling us all what exact iOS version that changed in, that would be awesome.</li>\n<li>As of the last edit of this answer, the code below is working on iOS 14.2.</li>\n</ul>\n<p><strong>Swift 5.2:</strong></p>\n<p>At the top of your view controller:</p>\n<pre><code>import AVFoundation\n</code></pre>\n<p>Before opening the camera view:</p>\n<pre><code>@IBAction func goToCamera()\n{\n    let status = AVCaptureDevice.authorizationStatus(for: .video)\n    switch (status)\n    {\n    case .authorized:\n        self.popCamera()\n\n    case .notDetermined:\n        AVCaptureDevice.requestAccess(for: .video) { (granted) in\n            if (granted)\n            {\n                self.popCamera()\n            }\n            else\n            {\n                self.camDenied()\n            }\n        }\n\n    case .denied:\n        self.camDenied()\n\n    case .restricted:\n        let alert = UIAlertController(title: &quot;Restricted&quot;,\n                                      message: &quot;You've been restricted from using the camera on this device. Without camera access this feature won't work. Please contact the device owner so they can give you access.&quot;,\n                                      preferredStyle: .alert)\n\n        let okAction = UIAlertAction(title: &quot;OK&quot;, style: .default, handler: nil)\n        alert.addAction(okAction)\n        self.present(alert, animated: true, completion: nil)\n    @unknown default:\n        fatalError()\n    }\n}\n</code></pre>\n<p>Denial alert with completion block:</p>\n<pre><code>func camDenied()\n{\n    DispatchQueue.main.async\n    {\n        var alertText = &quot;It looks like your privacy settings are preventing us from accessing your camera to do barcode scanning. You can fix this by doing the following:\\n\\n1. Close this app.\\n\\n2. Open the Settings app.\\n\\n3. Scroll to the bottom and select this app in the list.\\n\\n4. Turn the Camera on.\\n\\n5. Open this app and try again.&quot;\n\n        var alertButton = &quot;OK&quot;\n        var goAction = UIAlertAction(title: alertButton, style: .default, handler: nil)\n\n        if UIApplication.shared.canOpenURL(URL(string: UIApplication.openSettingsURLString)!)\n        {\n            alertText = &quot;It looks like your privacy settings are preventing us from accessing your camera to do barcode scanning. You can fix this by doing the following:\\n\\n1. Touch the Go button below to open the Settings app.\\n\\n2. Turn the Camera on.\\n\\n3. Open this app and try again.&quot;\n\n            alertButton = &quot;Go&quot;\n\n            goAction = UIAlertAction(title: alertButton, style: .default, handler: {(alert: UIAlertAction!) -&gt; Void in\n                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)\n            })\n        }\n\n        let alert = UIAlertController(title: &quot;Error&quot;, message: alertText, preferredStyle: .alert)\n        alert.addAction(goAction)\n        self.present(alert, animated: true, completion: nil)\n    }\n}\n</code></pre>\n<p><strong>Objective-C:</strong></p>\n<p>At the top of your view controller:</p>\n<pre><code>#import &lt;AVFoundation/AVFoundation.h&gt;\n</code></pre>\n<p>Before opening the camera view:</p>\n<pre><code>- (IBAction)goToCamera\n{\n    AVAuthorizationStatus authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];\n    if(authStatus == AVAuthorizationStatusAuthorized)\n    {\n        [self popCamera];\n    }\n    else if(authStatus == AVAuthorizationStatusNotDetermined)\n    {\n        NSLog(@&quot;%@&quot;, @&quot;Camera access not determined. Ask for permission.&quot;);\n        \n        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted)\n        {\n            if(granted)\n            {\n                NSLog(@&quot;Granted access to %@&quot;, AVMediaTypeVideo);\n                [self popCamera];\n            }\n            else\n            {\n                NSLog(@&quot;Not granted access to %@&quot;, AVMediaTypeVideo);\n                [self camDenied];\n            }\n        }];\n    }\n    else if (authStatus == AVAuthorizationStatusRestricted)\n    {\n        // My own Helper class is used here to pop a dialog in one simple line.\n        [Helper popAlertMessageWithTitle:@&quot;Error&quot; alertText:@&quot;You've been restricted from using the camera on this device. Without camera access this feature won't work. Please contact the device owner so they can give you access.&quot;];\n    }\n    else\n    {\n        [self camDenied];\n    }\n}\n</code></pre>\n<p>Denial alert:</p>\n<pre><code>- (void)camDenied\n{\n    NSLog(@&quot;%@&quot;, @&quot;Denied camera access&quot;);\n    \n    NSString *alertText;\n    NSString *alertButton;\n    \n    BOOL canOpenSettings = (&amp;UIApplicationOpenSettingsURLString != NULL);\n    if (canOpenSettings)\n    {\n        alertText = @&quot;It looks like your privacy settings are preventing us from accessing your camera to do barcode scanning. You can fix this by doing the following:\\n\\n1. Touch the Go button below to open the Settings app.\\n\\n2. Turn the Camera on.\\n\\n3. Open this app and try again.&quot;;\n        \n        alertButton = @&quot;Go&quot;;\n    }\n    else\n    {\n        alertText = @&quot;It looks like your privacy settings are preventing us from accessing your camera to do barcode scanning. You can fix this by doing the following:\\n\\n1. Close this app.\\n\\n2. Open the Settings app.\\n\\n3. Scroll to the bottom and select this app in the list.\\n\\n4. Turn the Camera on.\\n\\n5. Open this app and try again.&quot;;\n        \n        alertButton = @&quot;OK&quot;;\n    }\n    \n    UIAlertView *alert = [[UIAlertView alloc]\n                          initWithTitle:@&quot;Error&quot;\n                          message:alertText\n                          delegate:self\n                          cancelButtonTitle:alertButton\n                          otherButtonTitles:nil];\n    alert.tag = 3491832;\n    [alert show];\n}\n</code></pre>\n<p>Delegate call for the UIAlertView:</p>\n<pre><code>- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex\n{\n    if (alertView.tag == 3491832)\n    {\n        BOOL canOpenSettings = (&amp;UIApplicationOpenSettingsURLString != NULL);\n        if (canOpenSettings)\n            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];\n    }\n}\n</code></pre>",
+            "authorID": 546509,
+            "score": 97,
+            "creation_date": {
+                "value": "2014-09-27T02:07:18.830Z"
+            },
+            "numComments": 4,
+            "parentID": 26070594,
+            "authorID_1": 546509,
+            "numComments_1": 4
+        }
+    ]
+}
+
+--------------
+
+{
+    "time": [
+        {
+            "average_response_time": 650
+        }
+    ]
+}

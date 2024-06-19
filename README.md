@@ -50,3 +50,5 @@ There are currently 3 features that are supported (with more to come!)
 ## Where to locate the SQL files (C2/C3)
 
 The SQL files are located in `backend/sql`.
+
+The sample SQL files and output is located in `backend/sample`.
