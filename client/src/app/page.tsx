@@ -1,29 +1,38 @@
 "use client";
-import { useEffect, useState, FormEvent } from 'react';
+import { useEffect, useState, FormEvent } from "react";
 
 export default function Home() {
-  const [username, setUsername] = useState('');
-  const [activity, setActivity] = useState<any>(null);
-  const [tag, setTag] = useState('');
+  const [username, setUsername] = useState("");
+  const [activity, setActivity] = useState<{
+    answers: Array<any>;
+    questions: Array<any>;
+    comments: Array<any>;
+    upvotes: Array<any>;
+    wikis: Array<any>;
+  }>();
+  const [tag, setTag] = useState("");
   const [experts, setExperts] = useState<any>(null);
-  const [numPosts, setNumPosts] = useState('');
+  const [numPosts, setNumPosts] = useState("");
   const [posts, setPosts] = useState<any>(null);
 
   const handleActivitySubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8080/api/getactivity/${(username)}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/getactivity/${username}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       setActivity(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -31,35 +40,41 @@ export default function Home() {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:8080/api/getexperts/${(tag)}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/getexperts/${tag}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
       console.log(data);
       setExperts(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   const handlePostsSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-  
+
     try {
-      const response = await fetch(`http://localhost:8080/api/getmostcomments/${(numPosts)}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/getmostcomments/${numPosts}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await response.json();
       console.log(data);
       setPosts(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -85,13 +100,58 @@ export default function Home() {
         {activity && (
           <div className="mt-4">
             <h2>User Activity:</h2>
-            <ul>
-              <li>Questions: {JSON.stringify(activity.questions)}</li>
-              <li>Answers: {JSON.stringify(activity.answers)}</li>
-              <li>Wikis: {JSON.stringify(activity.wikis)}</li>
-              <li>Comments: {JSON.stringify(activity.comments)}</li>
-              <li>Upvotes: {JSON.stringify(activity.upvotes)}</li>
-            </ul>
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Questions</th>
+                  <th className="py-2 px-4 border-b">Answers</th>
+                  <th className="py-2 px-4 border-b">Wikis</th>
+                  <th className="py-2 px-4 border-b">Comments</th>
+                  <th className="py-2 px-4 border-b">Upvotes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {activity && activity.questions.length > 0 ? (
+                    activity.questions.map((question: any, qIndex: number) => (
+                      <td key={qIndex}>{question}</td>
+                    ))
+                  ) : (
+                    <td></td>
+                  )}
+                  {activity && activity.answers.length > 0 ? (
+                    activity.answers.map((answer: any, qIndex: number) => (
+                      <td key={qIndex}>{answer}</td>
+                    ))
+                  ) : (
+                    <td></td>
+                  )}
+                  {activity && activity.wikis.length > 0 ? (
+                    activity.wikis.map((wiki: any, qIndex: number) => (
+                      <td key={qIndex}>{wiki}</td>
+                    ))
+                  ) : (
+                    <td></td>
+                  )}
+                  {activity && activity.comments.length > 0 ? (
+                    activity.comments.map((comment: any, qIndex: number) => (
+                      <td key={qIndex}>{comment}</td>
+                    ))
+                  ) : (
+                    <td></td>
+                  )}
+                  {activity && activity.upvotes.length > 0 ? (
+                    activity.upvotes.map((upvote: any, qIndex: number) => (
+                      <tr key={qIndex}>
+                        <td>{upvote.postID}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <td></td>
+                  )}
+                </tr>
+              </tbody>
+            </table>
           </div>
         )}
 
@@ -114,11 +174,24 @@ export default function Home() {
         {experts && (
           <div className="mt-4">
             <h2>Experts:</h2>
-            <ul>
-              {experts.experts.map((expert: any, index: number) => (
-                <li key={index}>{JSON.stringify(expert)}</li>
-              ))}
-            </ul>
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Name</th>
+                  <th className="py-2 px-4 border-b">Author ID</th>
+                  <th className="py-2 px-4 border-b">Number of Answers</th>
+                </tr>
+              </thead>
+              <tbody>
+                {experts.experts.map((expert: any, index: number) => (
+                  <tr key={index}>
+                    <td className="py-2 px-4 border-b">{expert.username}</td>
+                    <td className="py-2 px-4 border-b">{expert.authorID}</td>
+                    <td className="py-2 px-4 border-b">{expert.numAns}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
 
@@ -159,9 +232,8 @@ export default function Home() {
                 ))}
               </tbody>
             </table>
-        </div>
+          </div>
         )}
-
       </div>
     </main>
   );
