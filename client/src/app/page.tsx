@@ -141,11 +141,24 @@ export default function Home() {
         {posts && (
           <div className="mt-4">
             <h2>Posts with Most Comments from a Single User:</h2>
-            <ul>
-              {posts.posts.map((post: any, index: number) => (
-                <li key={index}>{JSON.stringify(post)}</li>
-            ))}
-          </ul>
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Post ID</th>
+                  <th className="py-2 px-4 border-b">Question ID</th>
+                  <th className="py-2 px-4 border-b">Body</th>
+                </tr>
+              </thead>
+              <tbody>
+                {posts.posts.map((post: any, index: number) => (
+                  <tr key={index}>
+                    <td className="py-2 px-4 border-b">{post.postID}</td>
+                    <td className="py-2 px-4 border-b">{post.questionID}</td>
+                    <td className="py-2 px-4 border-b">{post.body}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
         </div>
         )}
 
