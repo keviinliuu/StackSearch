@@ -6,12 +6,14 @@ export default function Home() {
   const [activity, setActivity] = useState<any>(null);
   const [tag, setTag] = useState('');
   const [experts, setExperts] = useState<any>(null);
+  const [numPosts, setNumPosts] = useState('');
+  const [posts, setPosts] = useState<any>(null);
 
   const handleActivitySubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/getactivity/${(username)}`, {
+      const response = await fetch(`http://localhost:8080/api/getactivity/${(username)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -29,7 +31,7 @@ export default function Home() {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/api/getexperts/${(tag)}`, {
+      const response = await fetch(`http://localhost:8080/api/getexperts/${(tag)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -38,6 +40,24 @@ export default function Home() {
       const data = await response.json();
       console.log(data);
       setExperts(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const handlePostsSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  
+    try {
+      const response = await fetch(`http://localhost:8080/api/getmostcomments/${(numPosts)}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      console.log(data);
+      setPosts(data);
     } catch (error) {
       console.error('Error:', error);
     }
@@ -101,6 +121,34 @@ export default function Home() {
             </ul>
           </div>
         )}
+
+        <form onSubmit={handlePostsSubmit} className="mt-8">
+          <input
+            className="py-2 px-4 mb-4 rounded border border-gray-400 mr-2"
+            type="number"
+            placeholder="Enter number of posts"
+            value={numPosts}
+            onChange={(e) => setNumPosts(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Get Posts
+          </button>
+        </form>
+
+        {posts && (
+          <div className="mt-4">
+            <h2>Posts with Most Comments from a Single User:</h2>
+            <ul>
+              {posts.posts.map((post: any, index: number) => (
+                <li key={index}>{JSON.stringify(post)}</li>
+            ))}
+          </ul>
+        </div>
+        )}
+
       </div>
     </main>
   );
