@@ -24,12 +24,12 @@ Notably, it is important to first ensure that the dataset copied above is locate
 Once that is done, then we can now run SQL INSERT queries to copy over the data into the database schema. Here is an example of such a query:
 
 ```sql
-INSERT INTO `stackoverflow_sample.Questions` (
+INSERT INTO `stackoverflow_production.Questions` (
   SELECT id, title, body, owner_user_id, score, creation_date, accepted_answer_id FROM `stackoverflow_full2.posts_questions`  WHERE owner_user_id IS NOT NULL
 )
 ```
 
-All the other SQL INSERT queries we used are are located in `backend/sql` in the file `insert_prod_data.sql`.
+All the other SQL INSERT queries we used are are located in `backend/sql` in the file `insert_prod_data.sql`, with explanations provided.
 
 There is no other code needed to create our production dataset.
 
