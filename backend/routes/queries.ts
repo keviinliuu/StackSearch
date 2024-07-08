@@ -33,10 +33,15 @@ router.route('/api/getactivity/:username').get(async (req, res) => {
         const [job] = await bigquery.createQueryJob(options);
         const [rows] = await job.getQueryResults();
 
-        return rows[0].userID;
+        return rows;
     } 
 
-    const userId = await getId(username);
+    const userIdResult = await getId(username);
+    if(userIdResult.length == 0) {
+        return res.status(400).send({ error: "No user with that username found."})
+    }
+
+    const userId = userIdResult[0].userID;
 
     const sqlFilePath = '../sql/get_activity.sql';
     const queries = readSQLFile(sqlFilePath).split(';').map(query => query.trim()).filter(query => query);
