@@ -1,0 +1,462 @@
+***FEATURE 1***
+
+{
+    "questions": [
+        {
+            "postID": 28276797,
+            "title": "Optimizing GeoJSON MongoDB queries",
+            "body": "<p>I have some polygons stored in GeoJSON in my mongoDB.</p>\n\n<p>The client sends a list of boxes to load (the boxes are cells of a regular grid). </p>\n\n<p>The normal way to retrieve them is to make a GeoJSON query with each box, but it is slow when I have many boxes.</p>\n\n<p>I do not want to retrieve duplicates (polygons which lie on two cells are returned twice), so I make a list of retrieved polygons <em>pks</em> to ignore them in the next queries.</p>\n\n<p>Given:</p>\n\n<pre><code>box = [ [ [ 0, 0 ], [ 1, 0 ], [ 1, 1 ], [ 0, 1 ], [ 0, 0 ] ] ]  // the box to load\npks = [ ObjectId(\"54cf535cfe022e01ab4932f5\"), ObjectId(\"54cf535cfe022e01ab4932f6\") ] // the list of polygons already retrieved\n</code></pre>\n\n<p>With mongoDB I would have something like this:</p>\n\n<pre><code>for box in boxes:\n    db.places.find( { points: \n        { $geoIntersects: { $geometry: { type: \"Polygon\" ,  coordinates: box } } },\n        { _id: { $nin: pks } } \n    } )\n</code></pre>\n\n<p>I use MongoEngine, so I have the following:</p>\n\n<pre><code>pks = []\nfor box in boxes:\n   p = Polygon.objects(points__geo_intersects=box, pk__nin=pks)\n   if len(p)&gt;0:       \n      pks += p.scalar(\"id\")\n</code></pre>\n\n<p>I have three questions:</p>\n\n<p><strong>1. Is there a more efficient way to query the polygons with this method?</strong></p>\n\n<p><strong>2. Would it be faster to use a Cell object containing the list of reference of polygons which lie on the cell?</strong> </p>\n\n<p>In MongoEngine I would have the following model:</p>\n\n<pre><code>class Cell(Document):\n    x = DecimalField()\n    y = DecimalField()\n    polygons = ListField(ReferenceField('Polygon'))\n\n    meta = {\n        'indexes': [[ (\"x\", 1), (\"y\", 1) ]]\n    }\n</code></pre>\n\n<p>The list of boxes to load would be the coordinates corresponding to the cells to load.</p>\n\n<p>This would give with MongoEngine:</p>\n\n<pre><code>polygons = {}\n\nfor b in boxes:\n    cell = Cell.objects.get(x=b['x'], y=b['y'])\n\n    for polygon in cell.polygons:\n        if not polygons.has_key(polygon.pk):\n            polygons[polygon.pk] = polygon.to_json()\n</code></pre>\n\n<p><strong>3. Is there a more efficient way to query the polygons with this method?</strong> (I think I should use <a href=\"http://docs.mongoengine.org/apireference.html#mongoengine.queryset.QuerySet.select_related\" rel=\"nofollow\">select_related()</a>, and maybe it is possible to filter the polygons directly in the mongoDB query to avoid retrieving duplicates)</p>",
+            "authorID": 719276,
+            "score": 0,
+            "creation_date": {
+                "value": "2015-02-02T11:31:57.287Z"
+            },
+            "acceptedID": null
+        },
+        {
+            "postID": 15063490,
+            "title": "SURF not bound in opencv-python?",
+            "body": "<p>I'm getting this error when trying to use  cv.ExtractSURF:</p>\n\n<blockquote>\n  <p>cv2.error: OpenCV was built without SURF support</p>\n</blockquote>\n\n<p>I found the solution for c++ in this topic:</p>\n\n<p><a href=\"https://stackoverflow.com/questions/11175794/opencv-surf-function-is-not-implemented\">OpenCV SURF function is not implemented</a></p>\n\n<p>but how can I use it in python ?</p>\n\n<hr>\n\n<p>---Edit---</p>\n\n<hr>\n\n<p>When I try to run the example find_obj.py which uses cv2.SURF(800) I get the following error: </p>\n\n<pre><code>AttributeError: 'module' object has no attribute 'SURF'\n</code></pre>",
+            "authorID": 719276,
+            "score": 1,
+            "creation_date": {
+                "value": "2013-02-25T09:10:55.327Z"
+            },
+            "acceptedID": 15247245
+        },
+        {
+            "postID": 34337798,
+            "title": "How to merge multiple polygons with Boost.polygon?",
+            "body": "<p>I would like to merge a polygon with a set of polygons with Boost.polygon.</p>\n\n<p><a href=\"https://i.stack.imgur.com/MREOB.png\" rel=\"nofollow noreferrer\"><img src=\"https://i.stack.imgur.com/MREOB.png\" alt=\"Merge A, B and C\"></a></p>\n\n<p>For example merging the polygon C to the set (A, B) from the above picture would give the following result:</p>\n\n<p><a href=\"https://i.stack.imgur.com/JfDTX.png\" rel=\"nofollow noreferrer\"><img src=\"https://i.stack.imgur.com/JfDTX.png\" alt=\"Result\"></a></p>\n\n<p>How can I do that?</p>\n\n<p>I thought about adding each polygons to a polygon set (<code>polygon_set_data</code>), and perform a XOR and an AND operation between the polygon set and the polygon to add. </p>\n\n<p>The problem is that when I want to retrieve the result of my polygon set, all overlapping polygon are merged, resulting in a single polygon.</p>",
+            "authorID": 719276,
+            "score": 2,
+            "creation_date": {
+                "value": "2015-12-17T15:06:33.953Z"
+            },
+            "acceptedID": null
+        },
+        {
+            "postID": 32540443,
+            "title": "Can poly2tri create new points in the polygon?",
+            "body": "<p>Is that possible that <a href=\"https://code.google.com/p/poly2tri/\" rel=\"nofollow\">poly2tri</a> creates new points for the triangulation, or does it always use the given points only (the points on the contour and holes)?</p>",
+            "authorID": 719276,
+            "score": 1,
+            "creation_date": {
+                "value": "2015-09-12T15:21:41.037Z"
+            },
+            "acceptedID": 32560363
+        }
+    ],
+    "answers": [
+        {
+            "postID": 20050484,
+            "questionID": 20050364,
+            "body": "<p>I forgot to call <code>cv::initModule_nonfree();</code> before doing anything else.</p>",
+            "authorID": 719276,
+            "score": 0,
+            "creation_date": {
+                "value": "2013-11-18T14:42:25.343Z"
+            }
+        },
+        {
+            "postID": 34405823,
+            "questionID": 34401060,
+            "body": "<p>I think text tools are still in development in Paper.js*, so I guess you have to create one PointText by color or use gradients as you suggested if you want to stick with Paper.js. </p>\n\n<p>In my opinion you should really consider overlaying text on top of the canvas and handle styles with CSS. <a href=\"http://codepen.io/arthursw/pen/xZONEg\" rel=\"nofollow\">Here</a> is an example:</p>\n\n<p>html:</p>\n\n<pre><code>&lt;canvas id=\"PaperCanvas\"&gt;&lt;/canvas&gt;\n&lt;div id=\"container\"&gt;\n  &lt;div id=\"text\" contenteditable='true'&gt;\n    Your text\n  &lt;/div&gt;\n&lt;/div&gt;\n</code></pre>\n\n<p>coffeescript:</p>\n\n<pre><code>  ### ... some paper.js code ...\n  # drag &amp; drop:\n  $('#container').mousedown (event)-&gt;\n    if event.target.id != \"container\"\n      return\n    global.drag = true\n    global.delta = new Point( $('#container').offset().left  - event.pageX, $('#container').offset().top - event.pageY)\n    $(\"#text\").addClass(\"noselect\")\n    return\n\n  $(\"html\").mousemove (event)-&gt;\n    if global.drag\n      $('#container').css( left: event.pageX + global.delta.x, top: event.pageY + global.delta.y)\n    return\n\n  $(\"html\").mouseup (event)-&gt;\n    global.drag = false\n    $(\"#text\").removeClass(\"noselect\")\n    return\n</code></pre>\n\n<p>css:</p>\n\n<pre><code>canvas {\n  border: 1px solid black;\n  width: 500px;\n  height: 500px;\n}\n\n#container {\n  position: absolute;\n  top: 50px;\n  left: 50px;\n  padding: 20px;\n  border: 1px solid black;\n  background-color: 'red';\n}\n#text {\n  padding: 20px;\n  background-color: 'white';\n  border: 1px solid black;\n}\n.noselect {\n    -webkit-touch-callout: none;\n    -webkit-user-select: none;\n    -khtml-user-select: none;\n    -moz-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n}\n</code></pre>\n\n<p>*<a href=\"http://paperjs.org/reference/textitem/\" rel=\"nofollow\">http://paperjs.org/reference/textitem/</a></p>\n\n<blockquote>\n  <p>The TextItem type allows you to create typography. Its functionality is inherited by different text item types such as PointText, and AreaText (coming soon).</p>\n</blockquote>\n\n<p><strong>Edit</strong></p>\n\n<p>You can then use <a href=\"https://github.com/Irrelon/html-to-canvas\" rel=\"nofollow\">html-to-canvas</a> or <a href=\"http://cburgmer.github.io/rasterizeHTML.js/\" rel=\"nofollow\">rasterizeHTML.js</a> to convert your colored text into an image that you can paste onto the paper.js canvas at the correct location. (You can use <a href=\"http://paperjs.org/reference/raster/#raster\" rel=\"nofollow\">Raster</a> to import your image into paper.js)</p>",
+            "authorID": 719276,
+            "score": 2,
+            "creation_date": {
+                "value": "2015-12-21T23:01:08.540Z"
+            }
+        },
+        {
+            "postID": 60164586,
+            "questionID": 60141705,
+            "body": "<p>You can simply add all the items from all the layers in a group and rasterize it.</p>",
+            "authorID": 719276,
+            "score": 0,
+            "creation_date": {
+                "value": "2020-02-11T08:23:33.040Z"
+            }
+        },
+        {
+            "postID": 33330762,
+            "questionID": 33319806,
+            "body": "<p>Using paper.js directly in javascript is really simple, the only important thing you loose is the operator overloads (you must write PointA.add(PointB) instead of PointA + PointB). I have used it a lot in pure JS and never had a problem.</p>\n\n<p><a href=\"http://scratchdisk.com/posts/operator-overloading\" rel=\"nofollow\">Here</a> is the article which explains the differences between paperscript and javascript.</p>",
+            "authorID": 719276,
+            "score": 0,
+            "creation_date": {
+                "value": "2015-10-25T14:24:21.890Z"
+            }
+        }
+    ],
+    "wikis": [],
+    "comments": [
+        {
+            "commentID": 87211096,
+            "body": "No, it's more to have text-editor like features in a CLI (for the current/new command). Like place cursor with mouse, select with mouse, copy and paste, replace selected text, etc.",
+            "parentID": 50096994,
+            "authorID": 719276,
+            "score": 0,
+            "creation_date": {
+                "value": "2018-04-30T09:15:23.443Z"
+            }
+        },
+        {
+            "commentID": 78155233,
+            "body": "Have you seen [this example](http://paperjs.org/examples/boolean-operations/)? [This one](http://paperjs.org/examples/path-intersections/) could help... But flood fill works on rasters, you could convert your shapes into a raster and then flood fill with pixels.",
+            "parentID": 45584441,
+            "authorID": 719276,
+            "score": 1,
+            "creation_date": {
+                "value": "2017-08-09T18:13:28.230Z"
+            }
+        },
+        {
+            "commentID": 88099936,
+            "body": "@Black Just to make sure:\n1. Focus (click) on the source files where you want to look for the function, in the source panel of the dev tools. \n2. It's the letter 'O', not the number '0'.",
+            "parentID": 38293713,
+            "authorID": 719276,
+            "score": 3,
+            "creation_date": {
+                "value": "2018-05-26T15:44:31.573Z"
+            }
+        },
+        {
+            "commentID": 56186229,
+            "body": "Ok thanks! So if I understand correctly, one can add Steiner points in poly2tri to make it faster/help compute the triangulation?",
+            "parentID": 34221013,
+            "authorID": 719276,
+            "score": 0,
+            "creation_date": {
+                "value": "2015-12-11T10:20:11.440Z"
+            }
+        }
+    ],
+    "upvotes": [
+        {
+            "postID": 11820677
+        },
+        {
+            "postID": 12586
+        },
+        {
+            "postID": 681725
+        },
+        {
+            "postID": 57783534
+        },
+        {
+            "postID": 29557561
+        },
+        {
+            "postID": 4550514
+        },
+        {
+            "postID": 19241653
+        },
+        {
+            "postID": 46984758
+        },
+        {
+            "postID": 60871240
+        },
+        {
+            "postID": 60007557
+        },
+        {
+            "postID": 1537223
+        }
+    ]
+}
+
+--------------
+
+***FEATURE 2***
+
+{
+    "experts": [
+        {
+            "numAns": 7244,
+            "authorID": 65863
+        },
+        {
+            "numAns": 6483,
+            "authorID": 2079303
+        },
+        {
+            "numAns": 6163,
+            "authorID": 2877241
+        },
+        {
+            "numAns": 6066,
+            "authorID": 85371
+        },
+        {
+            "numAns": 6046,
+            "authorID": 440558
+        },
+        {
+            "numAns": 6020,
+            "authorID": 2684539
+        },
+        {
+            "numAns": 5817,
+            "authorID": 179910
+        },
+        {
+            "numAns": 5335,
+            "authorID": 434551
+        },
+        {
+            "numAns": 5124,
+            "authorID": 560648
+        },
+        {
+            "numAns": 5116,
+            "authorID": 1774667
+        }
+    ]
+}
+
+--------------
+
+***FEATURE 3***
+
+{
+    "posts": [
+        {
+            "postID": 38892391,
+            "questionID": 38846406,
+            "body": "<p>To compare 2 data tables within a data set you will need to actually reference those tables. Looking at your code it looks like you're trying to join a data table that's been filled from a spreadsheet to a whole dataset, which won't work.</p>\n\n<p>Try something like this:</p>\n\n<pre><code>var matched = from table1 in ds.Tables[\"Your Table\"].AsEnumerable()\n              join table2 in dt2.AsEnumerable()\n              on table1.Field&lt;string&gt;(\"ColumnA\") equals table2.Field&lt;string&gt;(\"ColumnC\") \n              where (table1.Field&lt;string&gt;(\"ColumnB\").Equals(table2.Field&lt;string&gt;(\"ColumnA\"))) \n              || (table1.Field&lt;int&gt;(\"ColumnC\") == table2.Field&lt;int&gt;(\"ColumnD\")) \n              select table1;\n</code></pre>\n\n<p><strong><em>UPDATE</em></strong></p>\n\n<p>If 'ds' is actually a datatable then do the following change:</p>\n\n<pre><code>var matched = from table1 in ds.AsEnumerable()\n</code></pre>\n\n<p><strong><em>UPDATE 2</em></strong></p>\n\n<p>Based on your picture in the comments it looks like the mapping should be:</p>\n\n<p>table1.ColumnA = table2.ColumnC - set this to string<br />\ntable1.ColumnB = table2.ColumnA - set this to string<br />\ntable1.ColumnC = table2.ColumnD - set this to int<br /></p>\n\n<p>It also looks like the types you cast to should be altered. I've updated the query with that in mind.</p>\n\n<p><strong><em>UPDATE 3</em></strong></p>\n\n<p>Following my previous comment try and strip out just the case numbers from both datatables and compare them. That will tell you whether the join should return any values. To do that you can use the following query:</p>\n\n<pre><code>var dsCaseNumbers = ds.AsEnumerable().Select(x =&gt; x.Field&lt;string&gt;(\"ColumnA\").ToList();\n</code></pre>\n\n<p>This will return a list of just the case numbers in ds. Create another list using the same query for dt:</p>\n\n<pre><code>var dtCaseNumbers = dt.AsEnumerable().Select(x =&gt; x.Field&lt;string&gt;(\"ColumnC\").ToList();\n</code></pre>\n\n<p>Then compare the 2 by doing:</p>\n\n<pre><code>var HasMatches = dsCaseNumbers.Any(y =&gt; dtCaseNumbers.Contains(y));\n</code></pre>\n\n<p>If there are matches between dsCaseNumbers and dtCaseNumbers 'HasMatches' will be true, if not then it will be false.</p>\n\n<p><strong><em>UPDATE 4</em></strong></p>\n\n<p>To display only the differences you can use the following:</p>\n\n<pre><code>var NoMatches = ds.AsEnumerable().Except(matched);\n</code></pre>\n\n<p>You can then use 'NoMatches' as the datasource for another datagrid. If the 'NoMatches' is determined by the table with the most rows and not always 'ds' then wrap the queries in a method that takes a 'main table' parameter and 'secondary table' parameter like this:</p>\n\n<pre><code>private IEnumerable&lt;DataRow&gt; NoMatches (DataTable MainTable, DataTable SecondaryTable)\n{\n    var matched = from table1 in MainTable.AsEnumerable()\n                  join table2 in SecondaryTable.AsEnumerable()\n                  on table1.Field&lt;string&gt;(\"ColumnA\") equals table2.Field&lt;string&gt;(\"ColumnC\") \n                  where (table1.Field&lt;string&gt;(\"ColumnB\").Equals(table2.Field&lt;string&gt;(\"ColumnA\"))) \n                  || (table1.Field&lt;int&gt;(\"ColumnC\") == table2.Field&lt;int&gt;(\"ColumnD\")) \n                  select table1;\n\n    return MainTable.AsEnumerable().Except(matched);\n}\n</code></pre>\n\n<p>Then simply do a count on the rows in each table first to determine which table should be the main table and call the method outlined above.</p>\n\n<p><strong><em>UPDATE 5</em></strong></p>\n\n<p>So, to use the method above and display non-matches in a new datagrid you can do the following:</p>\n\n<pre><code>//First determine which table should be considered 'Main'. This will be the one with the LEAST number of rows.\nvar dsRowCount = ds.AsEnumerable().Count();\nvar dtRowCount = dt.AsEnumerable().Count();\n\nif (dsRowCOunt &gt; dtRowCount)\n{\n    //Set main table to be dt as this has the least number of rows.\n    datagridView.Datasource = NoMatches(dt, ds);\n}\nelse\n{\n    //Set main table to ds as this has the least number of rows OR tables have the same number of rows.\n    datagridView.Datasource = NoMatches(ds, dt);\n}\n</code></pre>\n\n<p><strong><em>UPDATE 6</em></strong></p>\n\n<p>Edit private IEnumerable NoMatches to return a DataTable instead like this:</p>\n\n<pre><code>private DataTable NoMatches (DataTable MainTable, DataTable SecondaryTable)\n{\n    var matched = from table1 in MainTable.AsEnumerable()\n                  join table2 in SecondaryTable.AsEnumerable()\n                  on table1.Field&lt;string&gt;(\"ColumnA\") equals table2.Field&lt;string&gt;(\"ColumnC\") \n                  where (table1.Field&lt;string&gt;(\"ColumnB\").Equals(table2.Field&lt;string&gt;(\"ColumnA\"))) \n                  || (table1.Field&lt;int&gt;(\"ColumnC\") == table2.Field&lt;int&gt;(\"ColumnD\")) \n                  select table1;\n\n    return MainTable.AsEnumerable().Except(matched).CopyToDataTable();\n}\n</code></pre>\n\n<p>Note the 2 changes; the method signature and the return using 'CopyToDataTable()'</p>",
+            "authorID": 2381942,
+            "score": 1,
+            "creation_date": {
+                "value": "2016-08-11T09:27:03.983Z"
+            },
+            "numComments": 68,
+            "parentID": 38892391,
+            "authorID_1": 4443278,
+            "numComments_1": 68
+        },
+        {
+            "postID": 38892391,
+            "questionID": 38846406,
+            "body": "<p>To compare 2 data tables within a data set you will need to actually reference those tables. Looking at your code it looks like you're trying to join a data table that's been filled from a spreadsheet to a whole dataset, which won't work.</p>\n\n<p>Try something like this:</p>\n\n<pre><code>var matched = from table1 in ds.Tables[\"Your Table\"].AsEnumerable()\n              join table2 in dt2.AsEnumerable()\n              on table1.Field&lt;string&gt;(\"ColumnA\") equals table2.Field&lt;string&gt;(\"ColumnC\") \n              where (table1.Field&lt;string&gt;(\"ColumnB\").Equals(table2.Field&lt;string&gt;(\"ColumnA\"))) \n              || (table1.Field&lt;int&gt;(\"ColumnC\") == table2.Field&lt;int&gt;(\"ColumnD\")) \n              select table1;\n</code></pre>\n\n<p><strong><em>UPDATE</em></strong></p>\n\n<p>If 'ds' is actually a datatable then do the following change:</p>\n\n<pre><code>var matched = from table1 in ds.AsEnumerable()\n</code></pre>\n\n<p><strong><em>UPDATE 2</em></strong></p>\n\n<p>Based on your picture in the comments it looks like the mapping should be:</p>\n\n<p>table1.ColumnA = table2.ColumnC - set this to string<br />\ntable1.ColumnB = table2.ColumnA - set this to string<br />\ntable1.ColumnC = table2.ColumnD - set this to int<br /></p>\n\n<p>It also looks like the types you cast to should be altered. I've updated the query with that in mind.</p>\n\n<p><strong><em>UPDATE 3</em></strong></p>\n\n<p>Following my previous comment try and strip out just the case numbers from both datatables and compare them. That will tell you whether the join should return any values. To do that you can use the following query:</p>\n\n<pre><code>var dsCaseNumbers = ds.AsEnumerable().Select(x =&gt; x.Field&lt;string&gt;(\"ColumnA\").ToList();\n</code></pre>\n\n<p>This will return a list of just the case numbers in ds. Create another list using the same query for dt:</p>\n\n<pre><code>var dtCaseNumbers = dt.AsEnumerable().Select(x =&gt; x.Field&lt;string&gt;(\"ColumnC\").ToList();\n</code></pre>\n\n<p>Then compare the 2 by doing:</p>\n\n<pre><code>var HasMatches = dsCaseNumbers.Any(y =&gt; dtCaseNumbers.Contains(y));\n</code></pre>\n\n<p>If there are matches between dsCaseNumbers and dtCaseNumbers 'HasMatches' will be true, if not then it will be false.</p>\n\n<p><strong><em>UPDATE 4</em></strong></p>\n\n<p>To display only the differences you can use the following:</p>\n\n<pre><code>var NoMatches = ds.AsEnumerable().Except(matched);\n</code></pre>\n\n<p>You can then use 'NoMatches' as the datasource for another datagrid. If the 'NoMatches' is determined by the table with the most rows and not always 'ds' then wrap the queries in a method that takes a 'main table' parameter and 'secondary table' parameter like this:</p>\n\n<pre><code>private IEnumerable&lt;DataRow&gt; NoMatches (DataTable MainTable, DataTable SecondaryTable)\n{\n    var matched = from table1 in MainTable.AsEnumerable()\n                  join table2 in SecondaryTable.AsEnumerable()\n                  on table1.Field&lt;string&gt;(\"ColumnA\") equals table2.Field&lt;string&gt;(\"ColumnC\") \n                  where (table1.Field&lt;string&gt;(\"ColumnB\").Equals(table2.Field&lt;string&gt;(\"ColumnA\"))) \n                  || (table1.Field&lt;int&gt;(\"ColumnC\") == table2.Field&lt;int&gt;(\"ColumnD\")) \n                  select table1;\n\n    return MainTable.AsEnumerable().Except(matched);\n}\n</code></pre>\n\n<p>Then simply do a count on the rows in each table first to determine which table should be the main table and call the method outlined above.</p>\n\n<p><strong><em>UPDATE 5</em></strong></p>\n\n<p>So, to use the method above and display non-matches in a new datagrid you can do the following:</p>\n\n<pre><code>//First determine which table should be considered 'Main'. This will be the one with the LEAST number of rows.\nvar dsRowCount = ds.AsEnumerable().Count();\nvar dtRowCount = dt.AsEnumerable().Count();\n\nif (dsRowCOunt &gt; dtRowCount)\n{\n    //Set main table to be dt as this has the least number of rows.\n    datagridView.Datasource = NoMatches(dt, ds);\n}\nelse\n{\n    //Set main table to ds as this has the least number of rows OR tables have the same number of rows.\n    datagridView.Datasource = NoMatches(ds, dt);\n}\n</code></pre>\n\n<p><strong><em>UPDATE 6</em></strong></p>\n\n<p>Edit private IEnumerable NoMatches to return a DataTable instead like this:</p>\n\n<pre><code>private DataTable NoMatches (DataTable MainTable, DataTable SecondaryTable)\n{\n    var matched = from table1 in MainTable.AsEnumerable()\n                  join table2 in SecondaryTable.AsEnumerable()\n                  on table1.Field&lt;string&gt;(\"ColumnA\") equals table2.Field&lt;string&gt;(\"ColumnC\") \n                  where (table1.Field&lt;string&gt;(\"ColumnB\").Equals(table2.Field&lt;string&gt;(\"ColumnA\"))) \n                  || (table1.Field&lt;int&gt;(\"ColumnC\") == table2.Field&lt;int&gt;(\"ColumnD\")) \n                  select table1;\n\n    return MainTable.AsEnumerable().Except(matched).CopyToDataTable();\n}\n</code></pre>\n\n<p>Note the 2 changes; the method signature and the return using 'CopyToDataTable()'</p>",
+            "authorID": 2381942,
+            "score": 1,
+            "creation_date": {
+                "value": "2016-08-11T09:27:03.983Z"
+            },
+            "numComments": 67,
+            "parentID": 38892391,
+            "authorID_1": 2381942,
+            "numComments_1": 67
+        }
+    ]
+}
+
+--------------
+
+***FEATURE 4***
+
+{
+    "time": [
+        {
+            "average_response_time": 27200.880000000005
+        }
+    ]
+}
+
+--------------
+
+***FEATURE 5***
+
+{
+    "users": [
+        {
+            "userID": 39677,
+            "qdelta": 2589
+        },
+        {
+            "userID": 651174,
+            "qdelta": 2421
+        },
+        {
+            "userID": 875317,
+            "qdelta": 1939
+        },
+        {
+            "userID": 1103606,
+            "qdelta": 1820
+        },
+        {
+            "userID": 117700,
+            "qdelta": 1731
+        },
+        {
+            "userID": 4653,
+            "qdelta": 1723
+        },
+        {
+            "userID": 470184,
+            "qdelta": 1723
+        },
+        {
+            "userID": 1194415,
+            "qdelta": 1688
+        },
+        {
+            "userID": 149080,
+            "qdelta": 1652
+        },
+        {
+            "userID": 1833945,
+            "qdelta": 1610
+        }
+    ]
+}
+
+--------------
+
+***FEATURE 6***
+
+{
+    "tags": [
+        {
+            "tagName": "pandas",
+            "freq": 223954
+        },
+        {
+            "tagName": "python-3.x",
+            "freq": 193440
+        },
+        {
+            "tagName": "django",
+            "freq": 151145
+        },
+        {
+            "tagName": "numpy",
+            "freq": 93968
+        },
+        {
+            "tagName": "dataframe",
+            "freq": 79128
+        },
+        {
+            "tagName": "list",
+            "freq": 66305
+        },
+        {
+            "tagName": "python-2.7",
+            "freq": 62975
+        },
+        {
+            "tagName": "matplotlib",
+            "freq": 57759
+        },
+        {
+            "tagName": "tensorflow",
+            "freq": 45622
+        },
+        {
+            "tagName": "dictionary",
+            "freq": 44341
+        }
+    ]
+}
+
+--------------
+
+***FEATURE 7***
+
+{
+    "tags": [
+        {
+            "tagName": "tensorflow2.0"
+        },
+        {
+            "tagName": "tf.keras"
+        },
+        {
+            "tagName": "deep-netts"
+        },
+        {
+            "tagName": "deep-learning"
+        },
+        {
+            "tagName": "keras-rl"
+        },
+        {
+            "tagName": "matcaffe"
+        },
+        {
+            "tagName": "dl4j"
+        },
+        {
+            "tagName": "keras"
+        },
+        {
+            "tagName": "deeplearning4j"
+        },
+        {
+            "tagName": "tensorflow2.x"
+        },
+        {
+            "tagName": "intel-lpot"
+        },
+        {
+            "tagName": "conv-neural-network"
+        },
+        {
+            "tagName": "auto-keras"
+        }
+    ]
+}
+
+--------------
+
+***FEATURE 8***
+
+{
+    "posts": [
+        {
+            "postID": 63514801,
+            "body": "<p>You are specifying the wrong ID for the <code>VERSIONINFO</code> resource.  Per the <a href=\"https://docs.microsoft.com/en-us/windows/win32/menurc/versioninfo-resource\" rel=\"nofollow noreferrer\"><code>VERSIONINFO</code> documentation</a>, the ID must be <code>1</code>, not <code>MAIN</code>:</p>\n<blockquote>\n<p>There are two ways to format a VERSIONINFO statement:</p>\n<pre><code>versionID VERSIONINFO fixed-info  { block-statement . . . }\n</code></pre>\n<p>- or -</p>\n<pre><code>versionID VERSIONINFO \nfixed-info\nBEGIN\nblock-statement\n...\nEND\n</code></pre>\n<p><strong>Parameters</strong></p>\n<p><em>versionID</em></p>\n<p>Version-information resource identifier. <strong>This value must be 1.</strong></p>\n<p>...</p>\n</blockquote>\n<p>So, try this instead:</p>\n<pre><code>MAIN ICON &quot;icon.ico&quot;\n1 VERSIONINFO\nFILEVERSION 1,0,0,0\nPRODUCTVERSION 1,0,0,0\nBEGIN\n    BLOCK &quot;StringFileInfo&quot;\n    BEGIN\n        BLOCK &quot;081604b0&quot;\n        BEGIN\n            VALUE &quot;Comments&quot;, &quot;Tenta a tua Sorte!&quot;\n            VALUE &quot;CompanyName&quot;, &quot;Adsglobal&quot;\n            VALUE &quot;FileDescription&quot;, &quot;Jogo Simples&quot;\n            VALUE &quot;FileVersion&quot;, &quot;1.0.0.0&quot;\n            VALUE &quot;InternalName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;LegalCopyright&quot;, &quot;Copyright © Rodrigo Santos 2020&quot;\n            VALUE &quot;OriginalName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;ProductName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;ProductVersion&quot;, &quot;1.0.0.0&quot;\n        END\n    END\n    BLOCK &quot;VarFileInfo&quot;\n    BEGIN\n        VALUE &quot;Translation&quot;, 0x0816, 1200\n    END\nEND\n</code></pre>\n<p>Alternatively, you can use the <code>VS_VERSION_INFO</code> macro, which is pre-defined in <code>&lt;winver.h&gt;</code>, eg:</p>\n<pre><code>#include &lt;winver.h&gt;\n\nMAIN ICON &quot;icon.ico&quot;\nVS_VERSION_INFO VERSIONINFO\nFILEVERSION 1,0,0,0\nPRODUCTVERSION 1,0,0,0\nBEGIN\n    BLOCK &quot;StringFileInfo&quot;\n    BEGIN\n        BLOCK &quot;081604b0&quot;\n        BEGIN\n            VALUE &quot;Comments&quot;, &quot;Tenta a tua Sorte!&quot;\n            VALUE &quot;CompanyName&quot;, &quot;Adsglobal&quot;\n            VALUE &quot;FileDescription&quot;, &quot;Jogo Simples&quot;\n            VALUE &quot;FileVersion&quot;, &quot;1.0.0.0&quot;\n            VALUE &quot;InternalName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;LegalCopyright&quot;, &quot;Copyright © Rodrigo Santos 2020&quot;\n            VALUE &quot;OriginalName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;ProductName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;ProductVersion&quot;, &quot;1.0.0.0&quot;\n        END\n    END\n    BLOCK &quot;VarFileInfo&quot;\n    BEGIN\n        VALUE &quot;Translation&quot;, 0x0816, 1200\n    END\nEND\n</code></pre>",
+            "authorID": 65863
+        },
+        {
+            "postID": 21342516,
+            "body": "<p>You cannot <code>recv()</code> into a <code>std::stringstream</code> like you are attempting to.  You have to <code>recv()</code> into a buffer first and then you can copy that data into your <code>std::stringstream</code> afterwards.  However, you are using the <code>std::stringstream</code> only as an intermediate to get data into your <code>buff</code> buffer, and then from there to a <code>std::string</code>. You can get rid of the <code>std::stringstream</code> altogether and <code>recv()</code> directly into <code>buff</code> instead.  I would even go as far as getting rid of the <code>std::string</code> altogether as well, as you do not really need it:</p>\n\n<pre><code>int id = 1;\nstd::stringstream ss2;\nss2 &lt;&lt; id;\nstd::ofstream img(ss2.str().c_str(), std::ios::binary);\n\n// 1MB is a lot to put on the stack, use the heap instead\nstd::vector&lt;char&gt; buff(1024*1024);\ndo\n{\n    bytes_received = recv(new_sd, &amp;buff[0], buff.size(), 0);\n    if (bytes_received &lt; 0)\n        break; // ERROR!\n\n    if (bytes_received == 0)\n        break; // DISCONNECT!\n\n    for (int i = 0; i &lt; bytes_received; ++i)\n        std::cout &lt;&lt; buff[i];\n    std::cout &lt;&lt; std::endl;\n\n    img.write(&amp;buff[0], bytes_received);\n\n    // TODO: if reached the end of the image, stop here\n}\nwhile (true);\n</code></pre>\n\n<p>Unless the sender closes its end of the connection after sending the image data to you, then you need a way to know when the end of the image has been reached.  The sender will have to send the image data length to you so you know when to stop reading.</p>",
+            "authorID": 65863
+        },
+        {
+            "postID": 48937662,
+            "body": "<p>Your <code>SortedInsert()</code> method is allocating 2 <code>Node</code> objects, and not initializing them both correctly.  It should be allocating only 1 <code>Node</code> object, since you are inserting only 1 element.  When the list has 1 <code>Node</code> object in it, the <code>Head</code> and <code>Tail</code> pointers should be pointing at that <code>Node</code> object, not at different <code>Node</code> objects.</p>\n\n<p>Try this instead:</p>\n\n<pre><code>void DoublyLinkedList::SortedInsert(const int&amp; new_element) {\n\n    Node* np = new Node(new_element);\n\n    if (!Head)\n    {\n        Head = np;\n        Tail = np;\n    }\n    else if (new_element &lt; Head-&gt;Element)\n    {\n        np-&gt;Next = Head;\n        Head-&gt;Prev = np;\n        Head = np;\n    }\n    else\n    {\n        Node *cur = Head-&gt;Next;\n        while ((cur) &amp;&amp; (new_element &gt;= cur-&gt;Element))\n            cur = cur-&gt;Next;\n\n        if (cur)\n        {\n            np-&gt;Prev = cur-&gt;Prev;\n            np-&gt;Next = cur;\n            cur-&gt;Prev-&gt;Next = np;\n            cur-&gt;Prev = np;\n        }\n        else\n        {\n            Tail-&gt;Next = np;\n            np-&gt;Prev = Tail;\n            Tail = np;\n        }\n    }    \n}\n</code></pre>\n\n<p>When deleting a <code>Node</code> object, that is a simple traversal to find the <code>Node</code> and then update the surrounding <code>Node</code> objects to not point at it anymore, eg:</p>\n\n<pre><code>void DoublyLinkedList::Delete(const int&amp; del_element)\n{\n    Node *cur = Head;\n    while (cur)\n    {\n        if (cur-&gt;Element == del_element)\n        {\n            if (cur-&gt;Prev)\n                cur-&gt;Prev-&gt;Next = cur-&gt;Next;\n            if (cur-&gt;Next)\n                cur-&gt;Next-&gt;Prev = cur-&gt;Prev;\n            if (cur == Head)\n                Head = cur-&gt;Next;\n            if (cur == Tail)\n                Tail = cur-&gt;Prev;\n            delete cur;\n            break;\n        }\n        cur = cur-&gt;Next;\n    }\n}\n</code></pre>",
+            "authorID": 65863
+        },
+        {
+            "postID": 63124808,
+            "body": "<p>I would suggest writing a custom function that takes an acceptable range of min/max values as input parameters, eg:</p>\n<pre><code>int promptForInt(const string &amp;prompt, int minAllowed, int maxAllowed)\n{\n    int value;\n\n    std::cout &lt;&lt; prompt &lt;&lt; &quot;\\n&quot;;\n\n    do\n    {\n        if (!(std::cin &gt;&gt; value)) {\n            std::cin.clear();      \n            std::cin.ignore(std::numeric_limits&lt;std::streamsize&gt;::max(), '\\n');\n            std::cout &lt;&lt; &quot;not an integer, try again\\n&quot;;\n            continue;\n        }\n\n        if ((value &gt;= minAllowed) &amp;&amp; (value &lt;= maxAllowed)){\n            break;\n        }\n\n        std::cout &lt;&lt; &quot;not an allowed integer, enter a value between &quot; &lt;&lt; minAllowed &lt;&lt; &quot; and &quot; &lt;&lt; maxAllowed &lt;&lt; &quot;.\\n&quot;;\n    }\n    while (true);\n\n    return value;\n}\n\nint main(){ \n    int max = promptForInt(&quot;What is the max?&quot;, -1000, 1000);\n    std::cout &lt;&lt; &quot;The max number of steps are &quot; &lt;&lt; max &lt;&lt; std::endl;\n    return 0;\n}\n</code></pre>",
+            "authorID": 65863
+        },
+        {
+            "postID": 14328018,
+            "body": "<p>You can apply the <code>ES_CENTER</code> window style to an EDIT control.  If it has the <code>ES_MULTILINE</code> window style, all of its lines will be centered.</p>",
+            "authorID": 65863
+        }
+    ]
+}
+
+--------------
+
+***FEATURE 9***
+
+{
+    "comments": [
+        {
+            "rel_diff": 74.74031890660592,
+            "commentID": 18478881,
+            "body": "Depends on whether `[a, b, c]` and `[c, b, a, b]` are considered to have the same contents. This answer would say they do, but it could be that for the OP they don't (since one contains a duplicate and the other doesn't). To say nothing of the efficiency issues."
+        }
+    ]
+}

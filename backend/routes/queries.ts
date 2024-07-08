@@ -14,6 +14,11 @@ const readSQLFile = (filePath: string) => {
     return fs.readFileSync(path.resolve(__dirname, filePath), 'utf8');
 };
 
+function extractIdFromUrl(url: string): number | null {
+    const match = url.match(/\/(\d+)$/);
+    return match ? parseInt(match[1], 10) : null;
+  }
+
 router.route('/api/getactivity/:username').get(async (req, res) => {
     const username = req.params.username;
     
@@ -87,7 +92,7 @@ router.route('/api/getexperts/:tag').get(async (req, res) => {
     const [rows] = await job.getQueryResults();
 
     try {
-        return res.status(200).send({ experts: rows })
+        return res.status(200).send({ experts: rows });
     } catch (error) {
         console.error('Error executing query', error);
         return res.status(500).send({ error: 'Internal server error' });
@@ -173,6 +178,144 @@ router.route('/api/getqadiff/:order/:amount').get(async (req, res) => {
     } catch (error) {
         console.error('Error executing query', error);
         return res.status(500).send({ error: 'Internal server error' });
+    }
+})
+
+router.route('/api/getrelatedtags/:tag').get(async (req, res) => {
+    const tag = req.params.tag;
+
+    if(!tag) {
+        return res.status(400).send({ error: 'Tag is required' });
+    }
+
+    const sqlFilePath = '../sql/get_related_tags.sql';
+    const query = readSQLFile(sqlFilePath);
+
+    const options = {
+        query,
+        params: { tag: tag }
+    }
+
+    const [job] = await bigquery.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
+
+    try {
+        return res.status(200).send({ tags: rows });
+    } catch (error) {
+        console.error('Error executing query', error);
+        return res.status(500).send( {error: 'Internal server error' });
+    }
+})
+
+router.route('/api/getmentionedtags/:tag').get(async (req, res) => {
+    const tag = req.params.tag;
+
+    if(!tag) {
+        return res.status(400).send({ error: 'Tag is required' });
+    }
+
+    const sqlFilePath = '../sql/get_mentioned_tags.sql';
+    const query = readSQLFile(sqlFilePath);
+
+    const options = {
+        query,
+        params: { tag: tag }
+    }
+
+    const [job] = await bigquery.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
+
+    try {
+        return res.status(200).send({ tags: rows });
+    } catch (error) {
+        console.error('Error executing query', error);
+        return res.status(500).send( {error: 'Internal server error' });
+    }
+})
+
+router.route('/api/getauthorsanswers/:link/:tag').get(async (req, res) => {
+    const link = req.params.link;
+    const tag = req.params.tag;
+
+    if(!link || !link.includes('stackoverflow.com/a/')) {
+        return res.status(400).send({ error: 'Invalid answer link. '});
+    }
+
+    if(!tag) {
+        return res.status(400).send({ error: "Must have tag. "});
+    }
+
+    const postId = extractIdFromUrl(link);
+
+    if(!postId) {
+        return res.status(400).send({ error: "Could not parse ID - invalid answer." })
+    }
+
+    const sqlFilePath = '../sql/get_authors_answers.sql';
+    const query = readSQLFile(sqlFilePath);
+
+    const options = {
+        query,
+        params: { postID: postId, tag: tag.trim() }
+    }
+
+    const [job] = await bigquery.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
+
+    try {
+        return res.status(200).send({ posts: rows });
+    } catch (error) {
+        console.error('Error executing query', error);
+        return res.status(500).send( {error: 'Internal server error' });
+    }
+})
+
+router.route('/api/getredemptioncomment/:username').get(async (req, res) => {
+    const username = req.params.username;
+    
+    if(!username) {
+        return res.status(400).send({ error: 'Username is required' });
+    }
+
+    async function getId(username: string) {
+        const sqlFilePath = '../sql/get_userID.sql';
+        const query = readSQLFile(sqlFilePath);
+
+        const options = {
+            query,
+            params: { username: username }
+        }
+
+        const [job] = await bigquery.createQueryJob(options);
+        const [rows] = await job.getQueryResults();
+
+        return rows;
+    } 
+
+    const userIdResult = await getId(username);
+    if(userIdResult.length == 0) {
+        return res.status(400).send({ error: "No user with that username found."})
+    }
+
+    const userId = userIdResult[0].userID;
+    console.log(userId);
+
+    const sqlFilePath = '../sql/get_redemption_comment.sql';
+    const query = readSQLFile(sqlFilePath);
+
+    const options = {
+        query,
+        params: { authorID: userId }
+    }
+
+    const [job] = await bigquery.createQueryJob(options);
+    const [rows] = await job.getQueryResults();
+
+    try {
+        return res.status(200).send({ comment: rows });
+    } catch (error) {
+        console.error('Error executing query', error);
+        return res.status(500).send( {error: 'Internal server error' });
     }
 })
 

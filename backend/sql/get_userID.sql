@@ -1,3 +1,3 @@
 SELECT userID
-FROM stackoverflow_sample.Users t
+FROM stackoverflow_production.Users t
 WHERE t.username = @username;

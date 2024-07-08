@@ -3,7 +3,7 @@ WITH mostComments as (
   COUNT(*) as numComments, 
   parentID, 
   authorID
-  FROM stackoverflow_sample.Comments
+  FROM stackoverflow_production.Comments
   GROUP BY 
   parentID, 
   authorID
@@ -14,5 +14,5 @@ WITH mostComments as (
 SELECT
 *,
 numComments
-FROM stackoverflow_sample.Answers a JOIN
+FROM stackoverflow_production.Answers a JOIN
 mostComments mc ON a.postID = mc.parentID;

@@ -1,46 +1,50 @@
+-- Feature 1
+
 SELECT userID
-FROM Users t
+FROM stackoverflow_sample.Users t
 WHERE t.username = 'arthur.sw';
 
 SELECT * 
-FROM Questions
+FROM stackoverflow_sample.Questions
 WHERE authorID = 719276;
 
 SELECT *
-FROM Answers
+FROM stackoverflow_sample.Answers
 WHERE authorID = 719276;
 
 SELECT *
-FROM Wikis
+FROM stackoverflow_sample.Wikis
 WHERE authorID = 719276;
 
 SELECT *
-FROM Comments
+FROM stackoverflow_sample.Comments
 WHERE authorID = 719276;
 
 SELECT postID
 FROM (
     SELECT voterID, questionID as postID, isUpvote
-    FROM QuestionVotes
+    FROM stackoverflow_sample.QuestionVotes
     UNION ALL
     SELECT voterID, answerID as postID, isUpvote
-    FROM AnswerVotes
+    FROM stackoverflow_sample.AnswerVotes
 )
 WHERE voterID = 719276;
 
 -----------
 
+-- Feature 2
+
 SELECT
 COUNT(*) numAns,
 a.authorID
-FROM Answers a
-JOIN Questions q ON a.questionID = q.questionID
+FROM stackoverflow_sample.Answers a
+JOIN stackoverflow_sample.Questions q ON a.questionID = q.questionID
 WHERE
 EXISTS (
     SELECT * 
     FROM
-    Tags t
-    JOIN QuestionTags qt ON qt.tagID = t.tagID
+    stackoverflow_sample.Tags t
+    JOIN stackoverflow_sample.QuestionTags qt ON qt.tagID = t.tagID
     WHERE
     q.postID = qt.postID
     AND t.tagName = 'dynatrace'
@@ -53,12 +57,14 @@ LIMIT 10;
 
 -----------
 
+-- Feature 3
+
 WITH mostComments as (
   SELECT
   COUNT(*) as numComments, 
   parentID, 
   authorID
-  FROM Comments
+  FROM stackoverflow_sample.Comments
   GROUP BY 
   parentID, 
   authorID
@@ -69,24 +75,26 @@ WITH mostComments as (
 SELECT
 *,
 numComments
-FROM Answers a JOIN
+FROM stackoverflow_sample.Answers a JOIN
 mostComments mc ON a.postID = mc.parentID;
 
 -----------
+
+-- Feature 4
 
 WITH first_answers AS (
   SELECT 
   q.postID as question_id,  
   MIN(TIMESTAMP_DIFF(a.creation_date, q.creation_date, MINUTE)) as first_ans_delay
   FROM
-  Questions q
-  JOIN Answers a ON q.postID = a.questionID
+  stackoverflow_sample.Questions q
+  JOIN stackoverflow_sample.Answers a ON q.postID = a.questionID
   WHERE 
   EXISTS (
     SELECT * 
     FROM
-    Tags t
-    JOIN QuestionTags qt ON qt.tagID = t.tagID
+    stackoverflow_sample.Tags t
+    JOIN stackoverflow_sample.QuestionTags qt ON qt.tagID = t.tagID
     WHERE
     q.postID = qt.postID
     AND t.tagName = 'dynatrace'
@@ -100,6 +108,8 @@ FROM
 first_answers fa;
 
 -----------
+
+-- Feature 5
 
 WITH askedQuestions AS
 (
@@ -131,3 +141,4 @@ SELECT
   answers a ON q.authorID = a.authorID 
  ORDER BY qdelta DESC
  LIMIT 10;
+ 

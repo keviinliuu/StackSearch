@@ -4,7 +4,7 @@ WITH askedQuestions AS
   q.authorID,
   COUNT(*) AS qcount,
   FROM
-  stackoverflow_sample.Questions q
+  stackoverflow_production.Questions q
   GROUP BY 
   q.authorID
 )
@@ -15,7 +15,7 @@ answers AS
   a.authorID,
   COUNT(*) AS acount
   FROM
-  stackoverflow_sample.Answers a
+  stackoverflow_production.Answers a
   GROUP BY 
   a.authorID
 )

@@ -11,7 +11,7 @@ To load your database, you can clone the database into your own GCP account, whi
 
 Now, the database has been successfully loaded into the program and is ready to receive queries once the program is up and running!
 
-### Loading our production database
+## Loading the Production Database
 
 The process to create our production database is very similar to what is mentioned above.
 
@@ -69,6 +69,12 @@ There are currently 3 features that are supported (with more to come!)
 2) Get Experts - Given a tag, retrieve a list of the top "experts" of the tag, i.e. the people who have given the most answers to posts that have that tag.
 
 3) Get Posts with Most Comments from a Single User - Given an amount of posts to retrieve, retrieves the top number of posts with the most comments from the same user.
+
+**TO DO: LIST OUT FEATURES ONCE FRONTEND IS DONE**
+
+The backend implementation for these features can be found in `backend/routes/queries.ts`. All of the corresponding SQL code is in `backend/sql`.
+
+The frontend implementation can be found in `client/src/app/page.tsx`.
 
 ## Where to locate the SQL files (C2/C3)
 
