@@ -11,6 +11,29 @@ To load your database, you can clone the database into your own GCP account, whi
 
 Now, the database has been successfully loaded into the program and is ready to receive queries once the program is up and running!
 
+### Loading our production database
+
+The process to create our production database is very similar to what is mentioned above.
+
+Notably, it is important to first ensure that the dataset copied above is located on the same server region as our project. If not, do the following:
+1. Click on the dataset in the 'Explorer' page of the BigQuery console.
+2. Click on the 'Copy' icon and select the option 'Create New Dataset'.
+3. Fill out the relevant fields, making sure to select the correct server region (or multi-region) where your database schema is located.
+4. Click 'Create dataset' to create the copy
+
+Once that is done, then we can now run SQL INSERT queries to copy over the data into the database schema. Here is an example of such a query:
+
+```sql
+INSERT INTO `stackoverflow_sample.Questions` (
+  SELECT id, title, body, owner_user_id, score, creation_date, accepted_answer_id FROM `stackoverflow_full2.posts_questions`  WHERE owner_user_id IS NOT NULL
+)
+```
+
+All the other SQL INSERT queries we used are are located in `backend/sql` in the file `insert_prod_data.sql`.
+
+There is no other code needed to create our production dataset.
+
+
 ## How to Run StackSearch
 
 In order to run StackSearch, the backend and the frontend both need to be setup.
@@ -51,4 +74,6 @@ There are currently 3 features that are supported (with more to come!)
 
 The SQL files are located in `backend/sql`.
 
-The sample SQL files and output is located in `backend/sample`.
+The test sample SQL files and output are located in `backend/sample`.
+
+The test production SQL files and output are located in `backend/production`.
