@@ -86,7 +86,7 @@ The backend implementation for these features can be found in `backend/routes/qu
 
 The frontend implementation can be found in `client/src/app/page.tsx`.
 
-## Where to locate the SQL files (C2/C3)
+## Where to locate the SQL files (C2/C3/C4)
 
 The SQL files are located in `backend/sql`.
 
