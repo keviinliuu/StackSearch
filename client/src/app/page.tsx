@@ -1,11 +1,8 @@
-"use client";
-import { useEffect, useState, FormEvent } from "react";
-
-const link = encodeURIComponent("https://stackoverflow.com/a/936546");
-const tag = encodeURIComponent("c++");
+'use client';
+import { useEffect, useState, FormEvent } from 'react';
 
 export default function Home() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState('');
   const [activity, setActivity] = useState<{
     answers: Array<any>;
     questions: Array<any>;
@@ -13,28 +10,27 @@ export default function Home() {
     upvotes: Array<any>;
     wikis: Array<any>;
   }>();
-  const [tag, setTag] = useState("");
+  const [tag, setTag] = useState('');
   const [experts, setExperts] = useState<any>(null);
-  const [numPosts, setNumPosts] = useState("");
+  const [numPosts, setNumPosts] = useState('');
   const [posts, setPosts] = useState<any>(null);
-  const [avgResponseTimeTag, setAvgResponseTimeTag] = useState("");
+  const [avgResponseTimeTag, setAvgResponseTimeTag] = useState('');
   const [avgResponseTime, setAvgResponseTime] = useState<any>(null);
-  const [qaDiffOrder, setQaDiffOrder] = useState("");
-  const [qaDiffAmount, setQaDiffAmount] = useState("");
+  const [qaDiffOrder, setQaDiffOrder] = useState('');
+  const [qaDiffAmount, setQaDiffAmount] = useState('');
   const [qaDiffUsers, setQaDiffUsers] = useState<any>(null);
   const [relatedTags, setRelatedTags] = useState<any>(null);
-  const [relatedTagsTag, setRelatedTagsTag] = useState("");
+  const [relatedTagsTag, setRelatedTagsTag] = useState('');
 
   const [mentionedTags, setMentionedTags] = useState<any>(null);
-  const [mentionedTagsTag, setMentionedTagsTag] = useState("");
+  const [mentionedTagsTag, setMentionedTagsTag] = useState('');
 
-  // const [authorsAnswers, setAuthorsAnswers] = useState<any>(null);
-  // const [answerID, setAnswerID] = useState("");
-  // const [answerTag, setAnswerTag] = useState("");
-
+  const [answerID, setAnswerID] = useState('');
+  const [answerTag, setAnswerTag] = useState('');
+  const [authorsAnswers, setAuthorsAnswers] = useState<any>(null);
 
   const [redemptionComment, setRedemptionComment] = useState<any>(null);
-  const [redemptionUsername, setRedemptionUsername] = useState("");
+  const [redemptionUsername, setRedemptionUsername] = useState('');
 
   const handleActivitySubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -43,9 +39,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getactivity/${username}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -53,7 +49,7 @@ export default function Home() {
       console.log(data);
       setActivity(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
@@ -64,9 +60,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getexperts/${tag}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -74,7 +70,7 @@ export default function Home() {
       console.log(data);
       setExperts(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
@@ -85,9 +81,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getmostcomments/${numPosts}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -95,7 +91,7 @@ export default function Home() {
       console.log(data);
       setPosts(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
@@ -108,9 +104,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getavgrestime/${avgResponseTimeTag}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -118,7 +114,7 @@ export default function Home() {
       console.log(data);
       setAvgResponseTime(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
@@ -129,9 +125,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getqadiff/${qaDiffOrder}/${qaDiffAmount}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -139,7 +135,7 @@ export default function Home() {
       console.log(data);
       setQaDiffUsers(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
@@ -150,9 +146,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getrelatedtags/${relatedTagsTag}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -160,20 +156,22 @@ export default function Home() {
       console.log(data);
       setRelatedTags(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
-  
-  const handleMentionedTagsSubmit = async (event: FormEvent<HTMLFormElement>) => {
+
+  const handleMentionedTagsSubmit = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
-  
+
     try {
       const response = await fetch(
         `http://localhost:3000/api/getmentionedtags/${mentionedTagsTag}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -181,20 +179,22 @@ export default function Home() {
       console.log(data);
       setMentionedTags(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
 
-  const handleRedemptionCommentSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleRedemptionCommentSubmit = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
-  
+
     try {
       const response = await fetch(
         `http://localhost:3000/api/getredemptioncomment/${redemptionUsername}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -202,10 +202,38 @@ export default function Home() {
       console.log(data);
       setRedemptionComment(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error('Error:', error);
     }
   };
-    
+
+  const handleAuthorsAnswersSubmit = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    const baseLink = 'https://stackoverflow.com/a/';
+    const encodedLink = encodeURIComponent(`${baseLink}${answerID}`);
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/getauthorsanswers/${encodedLink}/${encodeURIComponent(
+          answerTag
+        )}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setAuthorsAnswers(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div>
@@ -458,7 +486,7 @@ export default function Home() {
           >
             Get Related Tags
           </button>
-        </form> 
+        </form>
 
         {relatedTags && (
           <div className="mt-4">
@@ -481,7 +509,7 @@ export default function Home() {
             </table>
           </div>
         )}
-        
+
         <form onSubmit={handleMentionedTagsSubmit} className="mt-8">
           <input
             className="py-2 px-4 mb-4 rounded border border-gray-400 mr-2"
@@ -548,17 +576,69 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                {redemptionComment.comment.map((comment: any, index: number) => (
-                  <tr key={index}>
-                    <td className="py-2 px-4 border-b">{comment.commentID}</td>
-                    <td className="py-2 px-4 border-b">{comment.rel_diff}</td>
-                    <td className="py-2 px-4 border-b">{comment.body}</td>
-                  </tr>
-                ))}
+                {redemptionComment.comment.map(
+                  (comment: any, index: number) => (
+                    <tr key={index}>
+                      <td className="py-2 px-4 border-b">
+                        {comment.commentID}
+                      </td>
+                      <td className="py-2 px-4 border-b">{comment.rel_diff}</td>
+                      <td className="py-2 px-4 border-b">{comment.body}</td>
+                    </tr>
+                  )
+                )}
               </tbody>
             </table>
           </div>
         )}
+
+        <form onSubmit={handleAuthorsAnswersSubmit} className="mt-8">
+          <input
+            className="py-2 px-4 mb-4 rounded border border-gray-400 mr-2"
+            type="text"
+            placeholder="Enter answer ID"
+            value={answerID}
+            onChange={(e) => setAnswerID(e.target.value)}
+          />
+          <input
+            className="py-2 px-4 mb-4 rounded border border-gray-400 mr-2"
+            type="text"
+            placeholder="Enter tag"
+            value={answerTag}
+            onChange={(e) => setAnswerTag(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-pink-600 hover:bg-pink-300 text-white font-bold py-2 px-4 rounded"
+          >
+            Get Author's Answers
+          </button>
+        </form>
+        {authorsAnswers &&
+          authorsAnswers.posts &&
+          authorsAnswers.posts.length > 0 && (
+            <div className="mt-4">
+              <h2>Author's Answers:</h2>
+              <table className="min-w-full bg-white">
+                <thead>
+                  <tr>
+                    <th className="py-2 px-4 border-b">Post ID</th>
+                    <th className="py-2 px-4 border-b">Body</th>
+                    <th className="py-2 px-4 border-b">Author ID</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {authorsAnswers.posts.map((post: any, index: number) => (
+                    <tr key={index}>
+                      <td className="py-2 px-4 border-b">{post.postID}</td>
+                      <td className="py-2 px-4 border-b">{post.body}</td>
+                      <td className="py-2 px-4 border-b">{post.authorID}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
       </div>
     </main>
   );
