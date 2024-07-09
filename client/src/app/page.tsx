@@ -1,8 +1,8 @@
-'use client';
-import { useEffect, useState, FormEvent } from 'react';
+"use client";
+import { useEffect, useState, FormEvent } from "react";
 
 export default function Home() {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [activity, setActivity] = useState<{
     answers: Array<any>;
     questions: Array<any>;
@@ -10,27 +10,27 @@ export default function Home() {
     upvotes: Array<any>;
     wikis: Array<any>;
   }>();
-  const [tag, setTag] = useState('');
+  const [tag, setTag] = useState("");
   const [experts, setExperts] = useState<any>(null);
-  const [numPosts, setNumPosts] = useState('');
+  const [numPosts, setNumPosts] = useState("");
   const [posts, setPosts] = useState<any>(null);
-  const [avgResponseTimeTag, setAvgResponseTimeTag] = useState('');
+  const [avgResponseTimeTag, setAvgResponseTimeTag] = useState("");
   const [avgResponseTime, setAvgResponseTime] = useState<any>(null);
-  const [qaDiffOrder, setQaDiffOrder] = useState('');
-  const [qaDiffAmount, setQaDiffAmount] = useState('');
+  const [qaDiffOrder, setQaDiffOrder] = useState("");
+  const [qaDiffAmount, setQaDiffAmount] = useState("");
   const [qaDiffUsers, setQaDiffUsers] = useState<any>(null);
   const [relatedTags, setRelatedTags] = useState<any>(null);
-  const [relatedTagsTag, setRelatedTagsTag] = useState('');
+  const [relatedTagsTag, setRelatedTagsTag] = useState("");
 
   const [mentionedTags, setMentionedTags] = useState<any>(null);
-  const [mentionedTagsTag, setMentionedTagsTag] = useState('');
+  const [mentionedTagsTag, setMentionedTagsTag] = useState("");
 
-  const [answerID, setAnswerID] = useState('');
-  const [answerTag, setAnswerTag] = useState('');
+  const [answerID, setAnswerID] = useState("");
+  const [answerTag, setAnswerTag] = useState("");
   const [authorsAnswers, setAuthorsAnswers] = useState<any>(null);
 
   const [redemptionComment, setRedemptionComment] = useState<any>(null);
-  const [redemptionUsername, setRedemptionUsername] = useState('');
+  const [redemptionUsername, setRedemptionUsername] = useState("");
 
   const handleActivitySubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,9 +39,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getactivity/${username}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -49,7 +49,7 @@ export default function Home() {
       console.log(data);
       setActivity(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -60,9 +60,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getexperts/${tag}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -70,7 +70,7 @@ export default function Home() {
       console.log(data);
       setExperts(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -81,9 +81,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getmostcomments/${numPosts}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -91,7 +91,7 @@ export default function Home() {
       console.log(data);
       setPosts(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -104,9 +104,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getavgrestime/${avgResponseTimeTag}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -114,7 +114,7 @@ export default function Home() {
       console.log(data);
       setAvgResponseTime(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -125,9 +125,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getqadiff/${qaDiffOrder}/${qaDiffAmount}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -135,7 +135,7 @@ export default function Home() {
       console.log(data);
       setQaDiffUsers(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -146,9 +146,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getrelatedtags/${relatedTagsTag}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -156,7 +156,7 @@ export default function Home() {
       console.log(data);
       setRelatedTags(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -169,9 +169,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getmentionedtags/${mentionedTagsTag}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -179,7 +179,7 @@ export default function Home() {
       console.log(data);
       setMentionedTags(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -192,9 +192,9 @@ export default function Home() {
       const response = await fetch(
         `http://localhost:3000/api/getredemptioncomment/${redemptionUsername}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -202,7 +202,7 @@ export default function Home() {
       console.log(data);
       setRedemptionComment(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -211,7 +211,7 @@ export default function Home() {
   ) => {
     event.preventDefault();
 
-    const baseLink = 'https://stackoverflow.com/a/';
+    const baseLink = "https://stackoverflow.com/a/";
     const encodedLink = encodeURIComponent(`${baseLink}${answerID}`);
 
     try {
@@ -220,9 +220,9 @@ export default function Home() {
           answerTag
         )}`,
         {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
         }
       );
@@ -230,7 +230,7 @@ export default function Home() {
       console.log(data);
       setAuthorsAnswers(data);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
@@ -255,57 +255,107 @@ export default function Home() {
 
         {activity && (
           <div className="mt-4">
-            <h2>User Activity:</h2>
+            <h2>Questions:</h2>
             <table className="min-w-full bg-white">
               <thead>
                 <tr>
-                  <th className="py-2 px-4 border-b">Questions</th>
-                  <th className="py-2 px-4 border-b">Answers</th>
-                  <th className="py-2 px-4 border-b">Wikis</th>
-                  <th className="py-2 px-4 border-b">Comments</th>
-                  <th className="py-2 px-4 border-b">Upvotes</th>
+                  <th className="py-2 px-4 border-b">Post ID</th>
+                  <th className="py-2 px-4 border-b">Question</th>
                 </tr>
               </thead>
               <tbody>
+                {activity.questions.map((question: any, index: number) => (
+                  <tr key={index}>
+                    <td className="py-2 px-4 border-b">{question.postID}</td>
+                    <td className="py-2 px-4 border-b">{question.title}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activity && (
+          <div className="mt-4">
+            <h2>Answers:</h2>
+            <table className="min-w-full bg-white">
+              <thead>
                 <tr>
-                  {activity && activity.questions.length > 0 ? (
-                    activity.questions.map((question: any, qIndex: number) => (
-                      <td key={qIndex}>{question}</td>
-                    ))
-                  ) : (
-                    <td></td>
-                  )}
-                  {activity && activity.answers.length > 0 ? (
-                    activity.answers.map((answer: any, qIndex: number) => (
-                      <td key={qIndex}>{answer}</td>
-                    ))
-                  ) : (
-                    <td></td>
-                  )}
-                  {activity && activity.wikis.length > 0 ? (
-                    activity.wikis.map((wiki: any, qIndex: number) => (
-                      <td key={qIndex}>{wiki}</td>
-                    ))
-                  ) : (
-                    <td></td>
-                  )}
-                  {activity && activity.comments.length > 0 ? (
-                    activity.comments.map((comment: any, qIndex: number) => (
-                      <td key={qIndex}>{comment}</td>
-                    ))
-                  ) : (
-                    <td></td>
-                  )}
-                  {activity && activity.upvotes.length > 0 ? (
-                    activity.upvotes.map((upvote: any, qIndex: number) => (
-                      <tr key={qIndex}>
-                        <td>{upvote.postID}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <td></td>
-                  )}
+                  <th className="py-2 px-4 border-b">Post ID</th>
+                  <th className="py-2 px-4 border-b">Answer</th>
                 </tr>
+              </thead>
+              <tbody>
+                {activity.answers.map((answer: any, index: number) => (
+                  <tr key={index}>
+                    <td className="py-2 px-4 border-b">{answer.postID}</td>
+                    <td className="py-2 px-4 border-b">{answer.body}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activity && (
+          <div className="mt-4">
+            <h2>Wikis:</h2>
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Wiki ID</th>
+                  <th className="py-2 px-4 border-b">Body</th>
+                </tr>
+              </thead>
+              <tbody>
+                {activity.wikis.map((wiki: any, index: number) => (
+                  <tr key={index}>
+                    <td className="py-2 px-4 border-b">{wiki.wikiID}</td>
+                    <td className="py-2 px-4 border-b">{wiki.body}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activity && (
+          <div className="mt-4">
+            <h2>Comments:</h2>
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Comment ID</th>
+                  <th className="py-2 px-4 border-b">Body</th>
+                </tr>
+              </thead>
+              <tbody>
+                {activity.comments.map((comment: any, index: number) => (
+                  <tr key={index}>
+                    <td className="py-2 px-4 border-b">{comment.commentID}</td>
+                    <td className="py-2 px-4 border-b">{comment.body}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activity && (
+          <div className="mt-4">
+            <h2>Upvotes:</h2>
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Post ID</th>
+                </tr>
+              </thead>
+              <tbody>
+                {activity.upvotes.map((upvotes: any, index: number) => (
+                  <tr key={index}>
+                    <td className="py-2 px-4 border-b">{upvotes.postID}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
