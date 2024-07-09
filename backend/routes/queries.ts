@@ -7,7 +7,7 @@ import path from 'path';
 dotenv.config();
 
 const router = Router();
-const projectId = 'cs348-424121'
+const projectId = process.env.PROJECT_ID;
 const bigquery = new BigQuery({projectId});
 
 const readSQLFile = (filePath: string) => {
