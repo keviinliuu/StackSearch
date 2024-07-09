@@ -1,6 +1,9 @@
 "use client";
 import { useEffect, useState, FormEvent } from "react";
 
+const link = encodeURIComponent("https://stackoverflow.com/a/936546");
+const tag = encodeURIComponent("c++");
+
 export default function Home() {
   const [username, setUsername] = useState("");
   const [activity, setActivity] = useState<{
@@ -14,6 +17,13 @@ export default function Home() {
   const [experts, setExperts] = useState<any>(null);
   const [numPosts, setNumPosts] = useState("");
   const [posts, setPosts] = useState<any>(null);
+  const [avgResponseTimeTag, setAvgResponseTimeTag] = useState("");
+  const [avgResponseTime, setAvgResponseTime] = useState<any>(null);
+  const [qaDiffOrder, setQaDiffOrder] = useState("");
+  const [qaDiffAmount, setQaDiffAmount] = useState("");
+  const [qaDiffUsers, setQaDiffUsers] = useState<any>(null);
+  const [relatedTags, setRelatedTags] = useState<any>(null);
+  const [relatedTagsTag, setRelatedTagsTag] = useState("");
 
   const handleActivitySubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -73,6 +83,71 @@ export default function Home() {
       const data = await response.json();
       console.log(data);
       setPosts(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleAvgResponseTimeSubmit = async (
+    event: FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/getavgrestime/${avgResponseTimeTag}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setAvgResponseTime(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleQaDiffSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/getqadiff/${qaDiffOrder}/${qaDiffAmount}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setQaDiffUsers(data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleRelatedTagsSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/getrelatedtags/${relatedTagsTag}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setRelatedTags(data);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -228,6 +303,125 @@ export default function Home() {
                     <td className="py-2 px-4 border-b">{post.postID}</td>
                     <td className="py-2 px-4 border-b">{post.questionID}</td>
                     <td className="py-2 px-4 border-b">{post.body}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <form onSubmit={handleAvgResponseTimeSubmit} className="mt-8">
+          <input
+            className="py-2 px-4 mb-4 rounded border border-gray-400 mr-2"
+            type="text"
+            placeholder="Enter tag for avg response time"
+            value={avgResponseTimeTag}
+            onChange={(e) => setAvgResponseTimeTag(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Get Avg Response Time
+          </button>
+        </form>
+
+        {avgResponseTime && (
+          <div className="mt-4">
+            <h2>Average Response Time:</h2>
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Avg Response Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="py-2 px-4 border-b">
+                    {avgResponseTime.time[0]?.average_response_time}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <form onSubmit={handleQaDiffSubmit} className="mt-8">
+          <input
+            className="py-2 px-4 mb-4 rounded border border-gray-400 mr-2"
+            type="text"
+            placeholder="Enter order (asc/desc)"
+            value={qaDiffOrder}
+            onChange={(e) => setQaDiffOrder(e.target.value)}
+          />
+          <input
+            className="py-2 px-4 mb-4 rounded border border-gray-400 mr-2"
+            type="number"
+            placeholder="Enter amount"
+            value={qaDiffAmount}
+            onChange={(e) => setQaDiffAmount(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Get QA Difference Users
+          </button>
+        </form>
+
+        {qaDiffUsers && (
+          <div className="mt-4">
+            <h2>Users with QA Difference:</h2>
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">User ID</th>
+                  <th className="py-2 px-4 border-b">QA Difference</th>
+                </tr>
+              </thead>
+              <tbody>
+                {qaDiffUsers.users.map((user: any, index: number) => (
+                  <tr key={index}>
+                    <td className="py-2 px-4 border-b">{user.userID}</td>
+                    <td className="py-2 px-4 border-b">{user.qdelta}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        <form onSubmit={handleRelatedTagsSubmit} className="mt-8">
+          <input
+            className="py-2 px-4 mb-4 rounded border border-gray-400 mr-2"
+            type="text"
+            placeholder="Enter tag"
+            value={relatedTagsTag}
+            onChange={(e) => setRelatedTagsTag(e.target.value)}
+          />
+          <button
+            type="submit"
+            className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Get Related Tags
+          </button>
+        </form>
+
+        {relatedTags && (
+          <div className="mt-4">
+            <h2>Related Tags:</h2>
+            <table className="min-w-full bg-white">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Tag Name</th>
+                  <th className="py-2 px-4 border-b">Frequency</th>
+                </tr>
+              </thead>
+              <tbody>
+                {relatedTags.tags.map((tag: any, index: number) => (
+                  <tr key={index}>
+                    <td className="py-2 px-4 border-b">{tag.tagName}</td>
+                    <td className="py-2 px-4 border-b">{tag.freq}</td>
                   </tr>
                 ))}
               </tbody>
