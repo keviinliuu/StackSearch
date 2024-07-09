@@ -176,44 +176,54 @@
 {
     "experts": [
         {
-            "numAns": 7244,
-            "authorID": 65863
-        },
-        {
-            "numAns": 6483,
-            "authorID": 2079303
-        },
-        {
-            "numAns": 6163,
-            "authorID": 2877241
-        },
-        {
-            "numAns": 6066,
-            "authorID": 85371
-        },
-        {
-            "numAns": 6046,
-            "authorID": 440558
-        },
-        {
-            "numAns": 6020,
-            "authorID": 2684539
-        },
-        {
-            "numAns": 5817,
-            "authorID": 179910
-        },
-        {
+            "username": "R Sahu",
             "numAns": 5335,
             "authorID": 434551
         },
         {
+            "username": "eerorika",
+            "numAns": 6483,
+            "authorID": 2079303
+        },
+        {
+            "username": "sehe",
+            "numAns": 6066,
+            "authorID": 85371
+        },
+        {
+            "username": "Lightness Races in Orbit",
             "numAns": 5124,
             "authorID": 560648
         },
         {
+            "username": "Some programmer dude",
+            "numAns": 6046,
+            "authorID": 440558
+        },
+        {
+            "username": "Remy Lebeau",
+            "numAns": 7244,
+            "authorID": 65863
+        },
+        {
+            "username": "Yakk - Adam Nevraumont",
             "numAns": 5116,
             "authorID": 1774667
+        },
+        {
+            "username": "Vlad from Moscow",
+            "numAns": 6163,
+            "authorID": 2877241
+        },
+        {
+            "username": "Jerry Coffin",
+            "numAns": 5817,
+            "authorID": 179910
+        },
+        {
+            "username": "Jarod42",
+            "numAns": 6020,
+            "authorID": 2684539
         }
     ]
 }
