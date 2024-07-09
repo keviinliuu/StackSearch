@@ -25,7 +25,7 @@ export default function Home() {
   const [mentionedTags, setMentionedTags] = useState<any>(null);
   const [mentionedTagsTag, setMentionedTagsTag] = useState("");
 
-  const [answerID, setAnswerID] = useState("");
+  const [link, setLink] = useState("");
   const [answerTag, setAnswerTag] = useState("");
   const [authorsAnswers, setAuthorsAnswers] = useState<any>(null);
 
@@ -210,15 +210,10 @@ export default function Home() {
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-
-    const baseLink = "https://stackoverflow.com/a/";
-    const encodedLink = encodeURIComponent(`${baseLink}${answerID}`);
-
+    const encodedLink = encodeURIComponent(`${link}`);
     try {
       const response = await fetch(
-        `http://localhost:3000/api/getauthorsanswers/${encodedLink}/${encodeURIComponent(
-          answerTag
-        )}`,
+        `http://localhost:3000/api/getauthorsanswers/${encodedLink}/${answerTag}`,
         {
           method: "GET",
           headers: {
@@ -234,6 +229,17 @@ export default function Home() {
     }
   };
 
+  const truncateText = (text: string, length: number) => {
+    if (text.length <= length) {
+      return text;
+    }
+    return text.substring(0, length) + '...';
+  };
+  
+  const AnswerRow = ({ post }: { post: any }) => {
+    const [showFullText, setShowFullText] = useState(false);
+  };
+  
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div>
@@ -583,14 +589,12 @@ export default function Home() {
               <thead>
                 <tr>
                   <th className="py-2 px-4 border-b">Tag Name</th>
-                  <th className="py-2 px-4 border-b">Frequency</th>
                 </tr>
               </thead>
               <tbody>
                 {mentionedTags.tags.map((tag: any, index: number) => (
                   <tr key={index}>
                     <td className="py-2 px-4 border-b">{tag.tagName}</td>
-                    <td className="py-2 px-4 border-b">{tag.freq}</td>
                   </tr>
                 ))}
               </tbody>
@@ -646,9 +650,9 @@ export default function Home() {
           <input
             className="py-2 px-4 mb-4 rounded border border-gray-400 mr-2"
             type="text"
-            placeholder="Enter answer ID"
-            value={answerID}
-            onChange={(e) => setAnswerID(e.target.value)}
+            placeholder="Enter link"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
           />
           <input
             className="py-2 px-4 mb-4 rounded border border-gray-400 mr-2"
