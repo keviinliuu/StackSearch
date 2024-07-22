@@ -45,19 +45,17 @@ const MentionedTags = () => {
 
       {mentionedTags && (
         <div className="mt-4">
-          <h2>Mentioned Tags:</h2>
+          <h2 className="text-xl font-bold mb-4">Mentioned Tags:</h2>
           <table className="min-w-full bg-white">
-            <thead>
+            <thead className="bg-gray-50">
               <tr>
-                <th className="py-2 px-4 border-b">Tag Name</th>
-                <th className="py-2 px-4 border-b">Frequency</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tag Name</th>
               </tr>
             </thead>
             <tbody>
               {mentionedTags.tags.map((tag: any, index: number) => (
                 <tr key={index}>
                   <td className="py-2 px-4 border-b">{tag.tagName}</td>
-                  <td className="py-2 px-4 border-b">{tag.freq}</td>
                 </tr>
               ))}
             </tbody>

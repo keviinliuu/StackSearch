@@ -53,12 +53,12 @@ const Activity = () => {
         <>
           {activity.questions.length > 0 && (
             <div className="mt-4">
-              <h2>Questions:</h2>
+              <h2 className="text-xl font-bold mb-4">Questions:</h2>
               <table className="min-w-full bg-white">
-                <thead>
+                <thead className="bg-gray-50">
                   <tr>
-                    <th className="py-2 px-4 border-b">Post ID</th>
-                    <th className="py-2 px-4 border-b">Question</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post ID</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Question</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -75,19 +75,19 @@ const Activity = () => {
 
           {activity.answers.length > 0 && (
             <div className="mt-4">
-              <h2>Answers:</h2>
+              <h2 className="text-xl font-bold mb-4">Answers:</h2>
               <table className="min-w-full bg-white">
-                <thead>
+                <thead className="bg-gray-50">
                   <tr>
-                    <th className="py-2 px-4 border-b">Post ID</th>
-                    <th className="py-2 px-4 border-b">Answer</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post ID</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Answer</th>
                   </tr>
                 </thead>
                 <tbody>
                   {activity.answers.map((answer: any, index: number) => (
                     <tr key={index}>
                       <td className="py-2 px-4 border-b">{answer.postID}</td>
-                      <td className="py-2 px-4 border-b">{answer.body}</td>
+                      <td className="py-2 px-4 border-b no-horizontal-scroll">{answer.body}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -97,19 +97,19 @@ const Activity = () => {
 
           {activity.wikis.length > 0 && (
             <div className="mt-4">
-              <h2>Wikis:</h2>
+              <h2 className="text-xl font-bold mb-4">Wikis:</h2>
               <table className="min-w-full bg-white">
-                <thead>
+                <thead className="bg-gray-50">
                   <tr>
-                    <th className="py-2 px-4 border-b">Wiki ID</th>
-                    <th className="py-2 px-4 border-b">Body</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wiki ID</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Body</th>
                   </tr>
                 </thead>
                 <tbody>
                   {activity.wikis.map((wiki: any, index: number) => (
                     <tr key={index}>
                       <td className="py-2 px-4 border-b">{wiki.wikiID}</td>
-                      <td className="py-2 px-4 border-b">{wiki.body}</td>
+                      <td className="py-2 px-4 border-b no-horizontal-scroll">{wiki.body}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -119,19 +119,19 @@ const Activity = () => {
 
           {activity.comments.length > 0 && (
             <div className="mt-4">
-              <h2>Comments:</h2>
+              <h2 className="text-xl font-bold mb-4">Comments:</h2>
               <table className="min-w-full bg-white">
-                <thead>
+                <thead className="bg-gray-50">
                   <tr>
-                    <th className="py-2 px-4 border-b">Comment ID</th>
-                    <th className="py-2 px-4 border-b">Body</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comment ID</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Body</th>
                   </tr>
                 </thead>
                 <tbody>
                   {activity.comments.map((comment: any, index: number) => (
                     <tr key={index}>
                       <td className="py-2 px-4 border-b">{comment.commentID}</td>
-                      <td className="py-2 px-4 border-b">{comment.body}</td>
+                      <td className="py-2 px-4 border-b no-horizontal-scroll">{comment.body}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -141,11 +141,11 @@ const Activity = () => {
 
           {activity.upvotes.length > 0 && (
             <div className="mt-4">
-              <h2>Upvotes:</h2>
+              <h2 className="text-xl font-bold mb-4">Upvotes:</h2>
               <table className="min-w-full bg-white">
-                <thead>
+                <thead className="bg-gray-100">
                   <tr>
-                    <th className="py-2 px-4 border-b">Post ID</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post ID</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -45,12 +45,12 @@ const RelatedTags = () => {
 
       {relatedTags && (
         <div className="mt-4">
-          <h2>Related Tags:</h2>
+          <h2 className="text-xl font-bold mb-4">Related Tags:</h2>
           <table className="min-w-full bg-white">
-            <thead>
+            <thead className="bg-gray-50">
               <tr>
-                <th className="py-2 px-4 border-b">Tag Name</th>
-                <th className="py-2 px-4 border-b">Frequency</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tag Name</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Frequency</th>
               </tr>
             </thead>
             <tbody>

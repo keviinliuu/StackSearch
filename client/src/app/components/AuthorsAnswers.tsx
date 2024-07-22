@@ -9,8 +9,10 @@ const AuthorsAnswers = () => {
     event.preventDefault();
 
     try {
+      const baseLink = "https://stackoverflow.com/a/";
+      const encodedLink = encodeURIComponent(`${baseLink}${answerID}`);
       const response = await fetch(
-        `http://localhost:3000/api/getauthorsanswers/${answerID}/${answerTag}`,
+        `http://localhost:3000/api/getauthorsanswers/${encodedLink}/${answerTag}`,
         {
           method: "GET",
           headers: {
@@ -53,21 +55,21 @@ const AuthorsAnswers = () => {
 
       {authorsAnswers && authorsAnswers.posts && authorsAnswers.posts.length > 0 && (
         <div className="mt-4">
-          <h2>Author's Answers:</h2>
+          <h2 className="text-xl font-bold mb-4">Author's Answers:</h2>
           <table className="min-w-full bg-white">
-            <thead>
+            <thead className="bg-gray-50">
               <tr>
-                <th className="py-2 px-4 border-b">Post ID</th>
-                <th className="py-2 px-4 border-b">Body</th>
-                <th className="py-2 px-4 border-b">Author ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Author ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Body</th>
               </tr>
             </thead>
             <tbody>
               {authorsAnswers.posts.map((post: any, index: number) => (
                 <tr key={index}>
                   <td className="py-2 px-4 border-b">{post.postID}</td>
-                  <td className="py-2 px-4 border-b">{post.body}</td>
                   <td className="py-2 px-4 border-b">{post.authorID}</td>
+                  <td className="py-2 px-4 border-b">{post.body}</td>
                 </tr>
               ))}
             </tbody>

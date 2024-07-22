@@ -53,12 +53,16 @@ const QaDiff = () => {
 
       {qaDiffUsers && (
         <div className="mt-4">
-          <h2>Users with QA Difference:</h2>
+          <h2 className="text-xl font-bold mb-4">Users with QA Difference:</h2>
           <table className="min-w-full bg-white">
-            <thead>
+            <thead className="bg-gray-50">
               <tr>
-                <th className="py-2 px-4 border-b">User ID</th>
-                <th className="py-2 px-4 border-b">QA Difference</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  User ID
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  QA Difference
+                </th>
               </tr>
             </thead>
             <tbody>

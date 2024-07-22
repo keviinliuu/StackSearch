@@ -13,7 +13,8 @@ import AuthorsAnswers from "./components/AuthorsAnswers";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <div className="gradient"></div>
       <div className="max-w-6xl w-full mx-auto">
         <Navbar />
         <section id="activity" className="my-8 section-offset">

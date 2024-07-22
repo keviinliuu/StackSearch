@@ -45,13 +45,13 @@ const Posts = () => {
 
       {posts && (
         <div className="mt-4">
-          <h2>Posts with Most Comments from a Single User:</h2>
+          <h2 className="text-xl font-bold mb-4">Posts with Most Comments from a Single User:</h2>
           <table className="min-w-full bg-white">
-            <thead>
+            <thead className="bg-gray-50">
               <tr>
-                <th className="py-2 px-4 border-b">Post ID</th>
-                <th className="py-2 px-4 border-b">Question ID</th>
-                <th className="py-2 px-4 border-b">Body</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Question ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Body</th>
               </tr>
             </thead>
             <tbody>
