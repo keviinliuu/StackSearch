@@ -60,9 +60,9 @@ To setup the frontend:
 6) Run `npm run dev`
 
 
-## Features Currently Supported
+## Features Currently Implemented
 
-There are currently 3 features that are supported (with more to come!)
+There are currently 9 features that have been implemented.
 
 1) Get Activity - Given a username of a user, retrieve all of their questions, answers, wikis, comments, and upvotes.
 
@@ -70,13 +70,23 @@ There are currently 3 features that are supported (with more to come!)
 
 3) Get Posts with Most Comments from a Single User - Given an amount of posts to retrieve, retrieves the top number of posts with the most comments from the same user.
 
-**TO DO: LIST OUT FEATURES ONCE FRONTEND IS DONE**
+4) Get Average Response Time for a Tag - Given a tag, gets the average time taken for the first answer to be posted to a question that has that tag.
+
+5) Get Greatest Question/Answer Difference - Given an amount of users to retrieve, retrieves the users who have the greatest disparity between the number of questions they have asked and the number of questions they have answered.
+
+6) Get Commonly Co-occuring Tags - Given a tag, retrieves the most common co-occuring tags in posts for that tag.
+
+7) Get Commonly Mentioned Tags within Wikis - Given a tag, recursively finds all the tags that are mentioned in the wiki of a given tag.
+
+8) Get More Answers from this Author - Given a specific answer, gets all the other answers on other posts (of a certain tag) that the same author (of the given answer) wrote.
+
+9) Get the "Redemption" Comment - Given a specific user, retrieves the comment that has the highest difference between its own score, and the average of all the comments previously left by the user. Essentially, it identifies a particularly noteworthy comment whose score stands out from previous comments written by that user.
 
 The backend implementation for these features can be found in `backend/routes/queries.ts`. All of the corresponding SQL code is in `backend/sql`.
 
 The frontend implementation can be found in `client/src/app/page.tsx`.
 
-## Where to locate the SQL files (C2/C3)
+## Where to locate the SQL files (C2/C3/C4)
 
 The SQL files are located in `backend/sql`.
 
