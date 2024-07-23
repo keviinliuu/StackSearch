@@ -1,8 +1,10 @@
 import dotenv from 'dotenv';
-import { Router } from 'express';
-import { BigQuery } from '@google-cloud/bigquery'
 import fs from 'fs';
 import path from 'path';
+
+import { Router } from 'express';
+import { BigQuery } from '@google-cloud/bigquery'
+import { summarizePost } from '../googleai';
 
 dotenv.config();
 
@@ -318,5 +320,47 @@ router.route('/api/getredemptioncomment/:username').get(async (req, res) => {
         return res.status(500).send( {error: 'Internal server error' });
     }
 })
+
+router.route('/api/summarizeanswer/:link').get(async (req, res) => {
+    const link = req.params.link;
+    
+    if(!link || !link.includes('stackoverflow.com/a/')) {
+        return res.status(400).send({ error: 'Invalid answer link. '});
+    }
+
+    const answerId = extractIdFromUrl(link);
+
+    if(!answerId) {
+        return res.status(400).send({ error: "Could not parse ID - invalid answer." })
+    }
+
+    async function getPost(postId: number) {
+        const sqlFilePath = '../sql/get_post_info.sql';
+        const query = readSQLFile(sqlFilePath);
+
+        const options = {
+            query, 
+            params: { postId: postId }
+        }
+
+        const [job] = await bigquery.createQueryJob(options);
+        const [rows] = await job.getQueryResults();
+
+        return rows;
+    }
+
+    const postInfo = await getPost(answerId);
+
+    const answerBody = postInfo[0].answer;
+    const questionBody = postInfo[0].question;
+
+    console.log(answerBody);
+    console.log(questionBody);
+    
+    const summarized = await summarizePost(answerBody, questionBody)
+
+    return res.status(200).send({ summary: summarized });
+})
+
 
 export default router;
