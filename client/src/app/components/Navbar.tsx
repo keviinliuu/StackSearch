@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import {UserButton} from "@clerk/nextjs";
 
 const Navbar: React.FC = () => {
   return (
@@ -43,6 +44,7 @@ const Navbar: React.FC = () => {
               <Link href="/authorsAnswers" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                 Author's Answer
               </Link>
+              <UserButton showName />
             </div>
           </div>
         </div>

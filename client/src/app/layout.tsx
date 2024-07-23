@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Alegreya } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import { ClerkProvider, SignedIn, SignedOut, SignIn } from "@clerk/nextjs";
+
+
 const allegreya = Alegreya({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,9 +18,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider>
     <html lang="en">
-      <body className={allegreya.className}>      <Navbar/>
-      {children}</body>
+      <body className={allegreya.className}>      
+      <Navbar/>
+        <SignedOut>
+            <div className="flex justify-center items-center min-h-screen">
+              <SignIn routing="hash" />
+            </div>
+        </SignedOut>
+        <SignedIn>
+          {children}
+        </SignedIn>
+      </body>
     </html>
+    </ClerkProvider>
   );
 }
