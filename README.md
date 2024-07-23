@@ -46,9 +46,10 @@ To setup the backend:
 ```
 PORT=<PORT NUMBER HERE>
 PROJECT_ID=<GCP PROJECT ID>
+GOOGLEAI_API_KEY=<GOOGLE AI API KEY>
 ```
 
-You can choose whatever port you want. `PROJECT_ID` should be replaced with your GCP project ID.
+You can choose whatever port you want. `PROJECT_ID` should be replaced with your GCP project ID. `GOOGLEAI_API_KEY` should be replaced with either your own API key from Google AI, or if you don't have one, you can ask one of the system administrators for one. 
 
 3) Run `npm i`
 4) Run `nodemon server.ts`
