@@ -1,4 +1,5 @@
 import { useState, FormEvent } from "react";
+import DOMPurify from "dompurify";
 
 const Activity = () => {
   const [username, setUsername] = useState("");
@@ -65,7 +66,13 @@ const Activity = () => {
                   {activity.questions.map((question: any, index: number) => (
                     <tr key={index}>
                       <td className="py-2 px-4 border-b">{question.postID}</td>
-                      <td className="py-2 px-4 border-b">{question.title}</td>
+                      <td className="py-2 px-4 border-b">
+                        <div>
+                          {
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(question.title)}}/>
+                          }
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -87,7 +94,14 @@ const Activity = () => {
                   {activity.answers.map((answer: any, index: number) => (
                     <tr key={index}>
                       <td className="py-2 px-4 border-b">{answer.postID}</td>
-                      <td className="py-2 px-4 border-b no-horizontal-scroll">{answer.body}</td>
+
+                      <td className="py-2 px-4 border-b no-horizontal-scroll">
+                        <div>
+                          {
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(answer.body)}}/>
+                          }
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
