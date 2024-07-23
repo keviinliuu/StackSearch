@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Alegreya } from "next/font/google";
 import "./globals.css";
-
+import Navbar from "./components/Navbar";
 const allegreya = Alegreya({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,7 +16,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={allegreya.className}>{children}</body>
+      <body className={allegreya.className}>      <Navbar/>
+      {children}</body>
     </html>
   );
 }
