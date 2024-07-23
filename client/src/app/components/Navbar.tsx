@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Navbar: React.FC = () => {
   return (
@@ -7,39 +8,41 @@ const Navbar: React.FC = () => {
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0 flex items-center">
             <img className="h-10 w-10" src="/logo.png" alt="Logo" />
+            <Link href="/">
             <span className="text-orange-600 text-2xl font-bold ml-2">
               StackSearch
             </span>
+            </Link>
           </div>
           <div className="hidden sm:block">
             <div className="flex space-x-4">
-              <a href="#activity" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+              <Link href="/activity" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                 Activity
-              </a>
-              <a href="#experts" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+              </Link>
+              <Link href="/experts" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                 Experts
-              </a>
-              <a href="#posts" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+              </Link>
+              <Link href="/posts" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                 Posts
-              </a>
-              <a href="#response-time" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+              </Link>
+              <Link href="/responseTime" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                 Response Time
-              </a>
-              <a href="#qa-diff" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+              </Link>
+              <Link href="/qa" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                 QA Difference
-              </a>
-              <a href="#related-tags" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+              </Link>
+              <Link href="/related" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                 Related Tags
-              </a>
-              <a href="#mentioned-tags" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+              </Link>
+              <Link href="/mentioned" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                 Mentioned Tags
-              </a>
-              <a href="#redemption" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+              </Link>
+              <Link href="/redemption" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                 Redemption
-              </a>
-              <a href="#authors-answers" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
+              </Link>
+              <Link href="/authorsAnswers" className="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">
                 Author's Answer
-              </a>
+              </Link>
             </div>
           </div>
         </div>
