@@ -1,4 +1,5 @@
 import { useState, FormEvent } from "react";
+import DOMPurify from "dompurify";
 
 const Posts = () => {
   const [numPosts, setNumPosts] = useState("");
@@ -59,7 +60,13 @@ const Posts = () => {
                 <tr key={index}>
                   <td className="py-2 px-4 border-b">{post.postID}</td>
                   <td className="py-2 px-4 border-b">{post.questionID}</td>
-                  <td className="py-2 px-4 border-b">{post.body}</td>
+                  <td className="py-2 px-4 border-b">
+                    <div>
+                          {
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.body)}}/>
+                          }
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
