@@ -83,6 +83,8 @@ There are currently 9 features that have been implemented.
 
 9) Get the "Redemption" Comment - Given a specific user, retrieves the comment that has the highest difference between its own score, and the average of all the comments previously left by the user. Essentially, it identifies a particularly noteworthy comment whose score stands out from previous comments written by that user.
 
+10) AI Answer Summarization - Given a link to an answer, StackSearch leverages AI to generate a summary of the answer and the question that it's answering. This allows you to quickly understand the answer, in case if it is too long or initially difficulty to understand. 
+
 The backend implementation for these features can be found in `backend/routes/queries.ts`. All of the corresponding SQL code is in `backend/sql`.
 
 The frontend implementation can be found in `client/src/app/page.tsx`.
