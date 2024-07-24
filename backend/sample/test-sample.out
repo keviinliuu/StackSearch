@@ -131,31 +131,15 @@
     "posts": [
         {
             "postID": 15454247,
-            "questionID": 15441628,
             "body": "<p>This is only a partial solution but:</p>\n\n<p>If I start play, then enter \"cloudbees-deploy-config mrm\", then it deploys with the mrm.conf</p>",
             "authorID": 1808672,
-            "score": 0,
-            "creation_date": {
-                "value": "2013-03-16T20:16:15.463Z"
-            },
             "numComments": 2,
-            "parentID": 15454247,
-            "authorID_1": 1808672,
-            "numComments_1": 2
         },
         {
             "postID": 8028207,
-            "questionID": 6878664,
             "body": "<p>I do not understand why nobody tried to answer this, or even comment in any way. SO works in mysterious ways I guess.. ;) Anyhow, I have researched enough (I think so) to be able to answer this myself, with a certain degree of confidence.</p>\n\n<p>So in essence prepared queries are much safer than just input escaping such as <code>mysql_real_escape_string();</code> , because as some wise people have said: </p>\n\n<blockquote>\n  <p>Yes, mysql_real_escape_string is effectively just a string escaping function. It is not a magic bullet. All it will do is escape dangerous characters in order that they can be safe to use in a single query string. However, if you do not sanitize your inputs beforehand, then you will be vulnerable to certain attack vectors.</p>\n</blockquote>\n\n<p>Link to full answer: <a href=\"https://stackoverflow.com/questions/110575/do-htmlspecialchars-and-mysql-real-escape-string-keep-my-php-code-safe-from-inje\">mysql_real_escape_string</a></p>\n\n<p>So what I have done to test my prepared statement vs escaping - I have made a simple submit form and tried to sanitize inputs with <code>mysql_real_escape_string();</code> and surely it failed with examples like <code>\"1 OR 1=1\"</code>, some people suggested adding the escaped values inside single quotes like that: </p>\n\n<blockquote>\n  <p>$query = \"SELECT * FROM mydb WHERE ID = ' \".$escapedID.\" ' \";</p>\n</blockquote>\n\n<p>It helps to prevent the <code>\"1 OR 1=1\"</code> example, but surely this is not the best practice. The problem with escaping is that it does not protect from people altering your query logic in malicious ways.</p>\n\n<p>So from now on I will stick to ADODB prepared statements. Like the one in my original question above, or a shorter version from <a href=\"http://bobby-tables.com/php.html\" rel=\"nofollow noreferrer\">bobby-tables</a> website:</p>\n\n<pre><code>   $dbConnection = NewADOConnection($connectionString); \n   $sqlResult =  $dbConnection-&gt;Execute( \n   'SELECT user_id,first_name,last_name FROM users WHERE username=? AND password=?'\n   , array($_POST['username'], sha1($_POST['password']) );\n</code></pre>\n\n<p>Other very helpful questions regarding SQL Injections:</p>\n\n<ul>\n<li><a href=\"https://stackoverflow.com/questions/110575/do-htmlspecialchars-and-mysql-real-escape-string-keep-my-php-code-safe-from-inje\">Code safe from injections</a></li>\n<li><a href=\"https://stackoverflow.com/questions/7893361/i-really-do-not-understand-mysql-injection-what-is-it\">I do not understand SQL Injection</a></li>\n<li><a href=\"http://ferruh.mavituna.com/sql-injection-cheatsheet-oku/\" rel=\"nofollow noreferrer\">SQL Injection cheat sheet</a></li>\n</ul>\n\n<p>Also watch this video, it makes SQL injection a lot easier to grasp:</p>\n\n<ul>\n<li><a href=\"http://www.youtube.com/watch?v=o4dJ7hdA8fs\" rel=\"nofollow noreferrer\">SQL Injection Myths &amp; Fallacies</a></li>\n</ul>",
             "authorID": 642462,
-            "score": 7,
-            "creation_date": {
-                "value": "2011-11-06T15:50:32.267Z"
-            },
             "numComments": 3,
-            "parentID": 8028207,
-            "authorID_1": 642462,
-            "numComments_1": 3
         }
     ]
 }
