@@ -12,7 +12,6 @@ WITH mostComments as (
   LIMIT @amount
 )
 SELECT
-*,
-numComments
+a.postID, mc.authorID, mc.numComments, a.body
 FROM stackoverflow_production.Answers a JOIN
 mostComments mc ON a.postID = mc.parentID;
