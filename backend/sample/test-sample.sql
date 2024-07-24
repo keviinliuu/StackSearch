@@ -70,7 +70,7 @@ WITH mostComments as (
   authorID
   ORDER BY 
   numComments desc
-  LIMIT 5
+  LIMIT 2
 )
 SELECT
 *,

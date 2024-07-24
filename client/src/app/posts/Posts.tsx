@@ -51,7 +51,8 @@ const Posts = () => {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Post ID</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Question ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Comment Author ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Number of Comments from Author</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Body</th>
               </tr>
             </thead>
@@ -59,7 +60,8 @@ const Posts = () => {
               {posts.posts.map((post: any, index: number) => (
                 <tr key={index}>
                   <td className="py-2 px-4 border-b">{post.postID}</td>
-                  <td className="py-2 px-4 border-b">{post.questionID}</td>
+                  <td className="py-2 px-4 border-b">{post.authorID}</td>
+                  <td className="py-2 px-4 border-b">{post.numComments}</td>
                   <td className="py-2 px-4 border-b">
                     <div>
                           {
