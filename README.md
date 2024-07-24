@@ -58,7 +58,7 @@ To setup the frontend:
 
 4) CD into the client folder with `cd client`
 5) Run `npm i`
-6) Run `npm run dev`![alt text](image.png)
+6) Run `npm run dev`
 
 
 ## Features Currently Implemented
