@@ -25,7 +25,8 @@ export default function Home() {
             h-auto
           ">
             <h3 className="text-gray-600 text-[22px] mt-10 ">What would you like to find out today?</h3>
-            <div className="grid grid-cols-3 grid-rows-3 gap-3 grid-flow-row m-10">
+            <div className="grid grid-cols-3 grid-rows-4 gap-3 m-10">
+              <Link href="/summary" className="col-span-3 flex flex-col justify-center"><div className="bg-transparent border-orange-600 border-solid border-2 rounded p-2 text-orange-600 text-center">Summary</div></Link>
               <Link href="/activity"><div className="bg-orange-600 rounded p-2 text-white text-center">Activity</div></Link>
               <Link href="/experts"><div className="bg-orange-600 rounded p-2 text-white text-center">Experts</div></Link>
               <Link href="/posts"><div className="bg-orange-600 rounded p-2 text-white text-center">Posts</div></Link>
@@ -41,7 +42,6 @@ export default function Home() {
           
 
         </div>
-        <Summary/>
       </div>
     </main>
   );
