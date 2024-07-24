@@ -35,7 +35,7 @@ export default function Home() {
               <Link href="/related"><div className="bg-orange-600 rounded p-2 text-white text-center">Related Tags</div></Link>
               <Link href="/mentioned"><div className="bg-orange-600 rounded p-2 text-white text-center">Mentioned Tags</div></Link>
               <Link href="/redemption"><div className="bg-orange-600 rounded p-2 text-white text-center">Redemption</div></Link>
-              <Link href="/authorAnswers"><div className="bg-orange-600 rounded p-2 text-white text-center">Author's Answer</div></Link>
+              <Link href="/authorsAnswers"><div className="bg-orange-600 rounded p-2 text-white text-center">Author's Answer</div></Link>
             </div>
           </div>
 

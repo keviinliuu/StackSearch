@@ -1,8 +1,16 @@
+import { format } from "path";
 import { useState, FormEvent } from "react";
 
 const AvgResponseTime = () => {
   const [avgResponseTimeTag, setAvgResponseTimeTag] = useState("");
   const [avgResponseTime, setAvgResponseTime] = useState<any>(null);
+
+
+  function outputTime(time: any) {
+    var n = new Date(0, 0);
+    n.setSeconds(time*60);
+    return n.getHours() + "h " + n.getMinutes() + "m " + n.getSeconds() + "s";
+  }
 
   const handleAvgResponseTimeSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,7 +63,8 @@ const AvgResponseTime = () => {
               <tbody>
                 <tr>
                   <td className="py-2 px-4 border-b">
-                    {avgResponseTime.time[0]?.average_response_time}
+                    {outputTime(avgResponseTime.time[0]?.average_response_time)}
+                    {/* {avgResponseTime.time[0]?.average_response_time.toFixed(2)} */}
                   </td>
                 </tr>
               </tbody>
