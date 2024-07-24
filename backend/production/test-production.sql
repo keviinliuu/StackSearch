@@ -52,7 +52,7 @@ WITH AuthorIDs AS (
       JOIN stackoverflow_production.QuestionTags qt ON qt.tagID = t.tagID
       WHERE
       q.postID = qt.postID
-      AND t.tagName = 'c++'
+      AND t.tagName = 'dynatrace'
     ) 
   AND a.authorID IS NOT NULL
   GROUP BY
