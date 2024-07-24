@@ -5,7 +5,7 @@ import {UserButton} from "@clerk/nextjs";
 const Navbar: React.FC = () => {
   return (
     <nav className="bg-white shadow-sm w-full fixed top-0 left-0 z-50">
-      <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-4 pl-2">
         <div className="flex justify-between items-center">
           <div className="flex-shrink-0 flex items-center">
             <img className="h-10 w-10" src="/logo.png" alt="Logo" />
