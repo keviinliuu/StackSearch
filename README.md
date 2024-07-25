@@ -63,7 +63,7 @@ To setup the frontend:
 
 ## Features Currently Implemented
 
-There are currently 9 features that have been implemented.
+There are currently 10 features that have been implemented.
 
 1) Get Activity - Given a username of a user, retrieve all of their questions, answers, wikis, comments, and upvotes.
 
