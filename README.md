@@ -77,6 +77,8 @@ There are currently 9 features that have been implemented.
 
 6) Get Commonly Co-occuring Tags - Given a tag, retrieves the most common co-occuring tags in posts for that tag.
 
+Below are some additional bonus advanced features.
+
 7) Get Commonly Mentioned Tags within Wikis - Given a tag, recursively finds all the tags that are mentioned in the wiki of a given tag.
 
 8) Get More Answers from this Author - Given a specific answer, gets all the other answers on other posts (of a certain tag) that the same author (of the given answer) wrote.

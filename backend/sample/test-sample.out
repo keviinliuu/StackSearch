@@ -164,43 +164,43 @@
     "tags": [
         {
             "tagName": "flask",
-            "freq": 312
+            "freq": 49
         },
         {
             "tagName": "python-3.x",
-            "freq": 278
+            "freq": 44
         },
         {
             "tagName": "data-analysis",
-            "freq": 243
+            "freq": 40
         },
         {
             "tagName": "numpy",
-            "freq": 221
+            "freq": 37
         },
         {
             "tagName": "web-scraping",
-            "freq": 198
+            "freq": 34
         },
         {
             "tagName": "pandas",
-            "freq": 186
+            "freq": 30
         },
         {
             "tagName": "machine-learning",
-            "freq": 159
+            "freq": 26
         },
         {
             "tagName": "api",
-            "freq": 135
+            "freq": 22
         },
         {
             "tagName": "regex",
-            "freq": 114
+            "freq": 18
         },
         {
             "tagName": "tkinter",
-            "freq": 107
+            "freq": 13
         }
     ]
 }
