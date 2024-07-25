@@ -266,55 +266,6 @@
 ***FEATURE 5***
 
 {
-    "users": [
-        {
-            "userID": 39677,
-            "qdelta": 2589
-        },
-        {
-            "userID": 651174,
-            "qdelta": 2421
-        },
-        {
-            "userID": 875317,
-            "qdelta": 1939
-        },
-        {
-            "userID": 1103606,
-            "qdelta": 1820
-        },
-        {
-            "userID": 117700,
-            "qdelta": 1731
-        },
-        {
-            "userID": 4653,
-            "qdelta": 1723
-        },
-        {
-            "userID": 470184,
-            "qdelta": 1723
-        },
-        {
-            "userID": 1194415,
-            "qdelta": 1688
-        },
-        {
-            "userID": 149080,
-            "qdelta": 1652
-        },
-        {
-            "userID": 1833945,
-            "qdelta": 1610
-        }
-    ]
-}
-
---------------
-
-***FEATURE 6***
-
-{
     "tags": [
         {
             "tagName": "pandas",
@@ -361,96 +312,49 @@
 
 --------------
 
-***FEATURE 7***
+***FEATURE 6***
 
 {
-    "tags": [
+    "users": [
         {
-            "tagName": "tensorflow2.0"
+            "userID": 39677,
+            "qdelta": 2589
         },
         {
-            "tagName": "tf.keras"
+            "userID": 651174,
+            "qdelta": 2421
         },
         {
-            "tagName": "deep-netts"
+            "userID": 875317,
+            "qdelta": 1939
         },
         {
-            "tagName": "deep-learning"
+            "userID": 1103606,
+            "qdelta": 1820
         },
         {
-            "tagName": "keras-rl"
+            "userID": 117700,
+            "qdelta": 1731
         },
         {
-            "tagName": "matcaffe"
+            "userID": 4653,
+            "qdelta": 1723
         },
         {
-            "tagName": "dl4j"
+            "userID": 470184,
+            "qdelta": 1723
         },
         {
-            "tagName": "keras"
+            "userID": 1194415,
+            "qdelta": 1688
         },
         {
-            "tagName": "deeplearning4j"
+            "userID": 149080,
+            "qdelta": 1652
         },
         {
-            "tagName": "tensorflow2.x"
-        },
-        {
-            "tagName": "intel-lpot"
-        },
-        {
-            "tagName": "conv-neural-network"
-        },
-        {
-            "tagName": "auto-keras"
-        }
-    ]
-}
-
---------------
-
-***FEATURE 8***
-
-{
-    "posts": [
-        {
-            "postID": 63514801,
-            "body": "<p>You are specifying the wrong ID for the <code>VERSIONINFO</code> resource.  Per the <a href=\"https://docs.microsoft.com/en-us/windows/win32/menurc/versioninfo-resource\" rel=\"nofollow noreferrer\"><code>VERSIONINFO</code> documentation</a>, the ID must be <code>1</code>, not <code>MAIN</code>:</p>\n<blockquote>\n<p>There are two ways to format a VERSIONINFO statement:</p>\n<pre><code>versionID VERSIONINFO fixed-info  { block-statement . . . }\n</code></pre>\n<p>- or -</p>\n<pre><code>versionID VERSIONINFO \nfixed-info\nBEGIN\nblock-statement\n...\nEND\n</code></pre>\n<p><strong>Parameters</strong></p>\n<p><em>versionID</em></p>\n<p>Version-information resource identifier. <strong>This value must be 1.</strong></p>\n<p>...</p>\n</blockquote>\n<p>So, try this instead:</p>\n<pre><code>MAIN ICON &quot;icon.ico&quot;\n1 VERSIONINFO\nFILEVERSION 1,0,0,0\nPRODUCTVERSION 1,0,0,0\nBEGIN\n    BLOCK &quot;StringFileInfo&quot;\n    BEGIN\n        BLOCK &quot;081604b0&quot;\n        BEGIN\n            VALUE &quot;Comments&quot;, &quot;Tenta a tua Sorte!&quot;\n            VALUE &quot;CompanyName&quot;, &quot;Adsglobal&quot;\n            VALUE &quot;FileDescription&quot;, &quot;Jogo Simples&quot;\n            VALUE &quot;FileVersion&quot;, &quot;1.0.0.0&quot;\n            VALUE &quot;InternalName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;LegalCopyright&quot;, &quot;Copyright © Rodrigo Santos 2020&quot;\n            VALUE &quot;OriginalName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;ProductName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;ProductVersion&quot;, &quot;1.0.0.0&quot;\n        END\n    END\n    BLOCK &quot;VarFileInfo&quot;\n    BEGIN\n        VALUE &quot;Translation&quot;, 0x0816, 1200\n    END\nEND\n</code></pre>\n<p>Alternatively, you can use the <code>VS_VERSION_INFO</code> macro, which is pre-defined in <code>&lt;winver.h&gt;</code>, eg:</p>\n<pre><code>#include &lt;winver.h&gt;\n\nMAIN ICON &quot;icon.ico&quot;\nVS_VERSION_INFO VERSIONINFO\nFILEVERSION 1,0,0,0\nPRODUCTVERSION 1,0,0,0\nBEGIN\n    BLOCK &quot;StringFileInfo&quot;\n    BEGIN\n        BLOCK &quot;081604b0&quot;\n        BEGIN\n            VALUE &quot;Comments&quot;, &quot;Tenta a tua Sorte!&quot;\n            VALUE &quot;CompanyName&quot;, &quot;Adsglobal&quot;\n            VALUE &quot;FileDescription&quot;, &quot;Jogo Simples&quot;\n            VALUE &quot;FileVersion&quot;, &quot;1.0.0.0&quot;\n            VALUE &quot;InternalName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;LegalCopyright&quot;, &quot;Copyright © Rodrigo Santos 2020&quot;\n            VALUE &quot;OriginalName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;ProductName&quot;, &quot;Tenta a Sorte&quot;\n            VALUE &quot;ProductVersion&quot;, &quot;1.0.0.0&quot;\n        END\n    END\n    BLOCK &quot;VarFileInfo&quot;\n    BEGIN\n        VALUE &quot;Translation&quot;, 0x0816, 1200\n    END\nEND\n</code></pre>",
-            "authorID": 65863
-        },
-        {
-            "postID": 21342516,
-            "body": "<p>You cannot <code>recv()</code> into a <code>std::stringstream</code> like you are attempting to.  You have to <code>recv()</code> into a buffer first and then you can copy that data into your <code>std::stringstream</code> afterwards.  However, you are using the <code>std::stringstream</code> only as an intermediate to get data into your <code>buff</code> buffer, and then from there to a <code>std::string</code>. You can get rid of the <code>std::stringstream</code> altogether and <code>recv()</code> directly into <code>buff</code> instead.  I would even go as far as getting rid of the <code>std::string</code> altogether as well, as you do not really need it:</p>\n\n<pre><code>int id = 1;\nstd::stringstream ss2;\nss2 &lt;&lt; id;\nstd::ofstream img(ss2.str().c_str(), std::ios::binary);\n\n// 1MB is a lot to put on the stack, use the heap instead\nstd::vector&lt;char&gt; buff(1024*1024);\ndo\n{\n    bytes_received = recv(new_sd, &amp;buff[0], buff.size(), 0);\n    if (bytes_received &lt; 0)\n        break; // ERROR!\n\n    if (bytes_received == 0)\n        break; // DISCONNECT!\n\n    for (int i = 0; i &lt; bytes_received; ++i)\n        std::cout &lt;&lt; buff[i];\n    std::cout &lt;&lt; std::endl;\n\n    img.write(&amp;buff[0], bytes_received);\n\n    // TODO: if reached the end of the image, stop here\n}\nwhile (true);\n</code></pre>\n\n<p>Unless the sender closes its end of the connection after sending the image data to you, then you need a way to know when the end of the image has been reached.  The sender will have to send the image data length to you so you know when to stop reading.</p>",
-            "authorID": 65863
-        },
-        {
-            "postID": 48937662,
-            "body": "<p>Your <code>SortedInsert()</code> method is allocating 2 <code>Node</code> objects, and not initializing them both correctly.  It should be allocating only 1 <code>Node</code> object, since you are inserting only 1 element.  When the list has 1 <code>Node</code> object in it, the <code>Head</code> and <code>Tail</code> pointers should be pointing at that <code>Node</code> object, not at different <code>Node</code> objects.</p>\n\n<p>Try this instead:</p>\n\n<pre><code>void DoublyLinkedList::SortedInsert(const int&amp; new_element) {\n\n    Node* np = new Node(new_element);\n\n    if (!Head)\n    {\n        Head = np;\n        Tail = np;\n    }\n    else if (new_element &lt; Head-&gt;Element)\n    {\n        np-&gt;Next = Head;\n        Head-&gt;Prev = np;\n        Head = np;\n    }\n    else\n    {\n        Node *cur = Head-&gt;Next;\n        while ((cur) &amp;&amp; (new_element &gt;= cur-&gt;Element))\n            cur = cur-&gt;Next;\n\n        if (cur)\n        {\n            np-&gt;Prev = cur-&gt;Prev;\n            np-&gt;Next = cur;\n            cur-&gt;Prev-&gt;Next = np;\n            cur-&gt;Prev = np;\n        }\n        else\n        {\n            Tail-&gt;Next = np;\n            np-&gt;Prev = Tail;\n            Tail = np;\n        }\n    }    \n}\n</code></pre>\n\n<p>When deleting a <code>Node</code> object, that is a simple traversal to find the <code>Node</code> and then update the surrounding <code>Node</code> objects to not point at it anymore, eg:</p>\n\n<pre><code>void DoublyLinkedList::Delete(const int&amp; del_element)\n{\n    Node *cur = Head;\n    while (cur)\n    {\n        if (cur-&gt;Element == del_element)\n        {\n            if (cur-&gt;Prev)\n                cur-&gt;Prev-&gt;Next = cur-&gt;Next;\n            if (cur-&gt;Next)\n                cur-&gt;Next-&gt;Prev = cur-&gt;Prev;\n            if (cur == Head)\n                Head = cur-&gt;Next;\n            if (cur == Tail)\n                Tail = cur-&gt;Prev;\n            delete cur;\n            break;\n        }\n        cur = cur-&gt;Next;\n    }\n}\n</code></pre>",
-            "authorID": 65863
-        },
-        {
-            "postID": 63124808,
-            "body": "<p>I would suggest writing a custom function that takes an acceptable range of min/max values as input parameters, eg:</p>\n<pre><code>int promptForInt(const string &amp;prompt, int minAllowed, int maxAllowed)\n{\n    int value;\n\n    std::cout &lt;&lt; prompt &lt;&lt; &quot;\\n&quot;;\n\n    do\n    {\n        if (!(std::cin &gt;&gt; value)) {\n            std::cin.clear();      \n            std::cin.ignore(std::numeric_limits&lt;std::streamsize&gt;::max(), '\\n');\n            std::cout &lt;&lt; &quot;not an integer, try again\\n&quot;;\n            continue;\n        }\n\n        if ((value &gt;= minAllowed) &amp;&amp; (value &lt;= maxAllowed)){\n            break;\n        }\n\n        std::cout &lt;&lt; &quot;not an allowed integer, enter a value between &quot; &lt;&lt; minAllowed &lt;&lt; &quot; and &quot; &lt;&lt; maxAllowed &lt;&lt; &quot;.\\n&quot;;\n    }\n    while (true);\n\n    return value;\n}\n\nint main(){ \n    int max = promptForInt(&quot;What is the max?&quot;, -1000, 1000);\n    std::cout &lt;&lt; &quot;The max number of steps are &quot; &lt;&lt; max &lt;&lt; std::endl;\n    return 0;\n}\n</code></pre>",
-            "authorID": 65863
-        },
-        {
-            "postID": 14328018,
-            "body": "<p>You can apply the <code>ES_CENTER</code> window style to an EDIT control.  If it has the <code>ES_MULTILINE</code> window style, all of its lines will be centered.</p>",
-            "authorID": 65863
-        }
-    ]
-}
-
---------------
-
-***FEATURE 9***
-
-{
-    "comments": [
-        {
-            "rel_diff": 74.74031890660592,
-            "commentID": 18478881,
-            "body": "Depends on whether `[a, b, c]` and `[c, b, a, b]` are considered to have the same contents. This answer would say they do, but it could be that for the OP they don't (since one contains a duplicate and the other doesn't). To say nothing of the efficiency issues."
+            "userID": 1833945,
+            "qdelta": 1610
         }
     ]
 }

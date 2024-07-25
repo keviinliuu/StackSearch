@@ -73,8 +73,7 @@ WITH mostComments as (
   LIMIT 2
 )
 SELECT
-*,
-numComments
+a.postID, mc.authorID, mc.numComments, a.body
 FROM stackoverflow_sample.Answers a JOIN
 mostComments mc ON a.postID = mc.parentID;
 
@@ -110,6 +109,25 @@ first_answers fa;
 -----------
 
 -- Feature 5
+
+WITH tagID AS (SELECT tagID FROM stackoverflow_sample.Tags WHERE tagName = 'python'),
+questionsOfTag AS (SELECT qt.postID FROM stackoverflow_sample.QuestionTags qt WHERE qt.tagID IN (SELECT * FROM tagID)),
+occuringTagIDs AS (SELECT  
+COUNT(*) freq,
+qt.tagID
+FROM stackoverflow_sample.QuestionTags qt
+JOIN questionsOfTag q ON qt.postID = q.postID
+GROUP BY qt.tagID)
+
+SELECT t.tagName, ot.freq
+FROM occuringTagIDs ot JOIN stackoverflow_sample.Tags t ON ot.tagID = t.tagID
+WHERE t.tagName != @tag
+ORDER BY ot.freq DESC
+LIMIT 10;
+
+-----------
+
+-- Feature 6
 
 WITH askedQuestions AS
 (
